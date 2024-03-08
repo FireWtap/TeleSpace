@@ -20,10 +20,18 @@
   },
   "dependencies": {
     "@mantine/core": "7.6.1",
+    "@mantine/form": "^7.6.1",
     "@mantine/hooks": "7.6.1",
+    "@nanostores/persistent": "^0.10.1",
+    "@nanostores/react": "^0.7.2",
+    "@tabler/icons-react": "^2.47.0",
+    "axios": "^1.6.7",
+    "dotenv": "^16.4.5",
+    "nanostores": "^0.10.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.21.0"
+    "react-router-dom": "^6.21.0",
+    "universal-cookie": "^7.1.0"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.6.6",

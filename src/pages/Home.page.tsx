@@ -1,11 +1,11 @@
 import { Welcome } from '../components/Welcome/Welcome';
-import { ColorSchemeToggle } from '../components/ColorSchemeToggle/ColorSchemeToggle';
+import { Container, Center, Flex } from '@mantine/core';
+import { FooterCentered } from '@/components/Footer/FooterCentered';
 
 export function HomePage() {
   return (
     <>
       <Welcome />
-      <ColorSchemeToggle />
     </>
   );
 }
