@@ -7,7 +7,11 @@ import { useStore } from '@nanostores/react';
 import { $isLoggedIn } from './stores/user';
 import { AppShell } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import Dashboard from './pages/Dashboard.page';
+import Dashboard from './pages/Navpages/Dashboard.page';
+import Navbar from './components/Navbar/Navbar';
+import Header from './components/Header/Header';
+import Profile from './pages/Profile.page';
+import Cloud from './pages/Navpages/Cloud.page';
 
 function NonLoggedIn() {
   return (
@@ -37,8 +41,15 @@ export default function RouteGuard() {
         }}
         padding="md"
       >
-        <AppShell.Header></AppShell.Header>
-        <AppShell.Navbar></AppShell.Navbar>
+        <AppShell.Header>
+          <Header />
+        </AppShell.Header>
+        <AppShell.Navbar>
+          <Navbar />
+        </AppShell.Navbar>
+        <AppShell.Main>
+          <Outlet />
+        </AppShell.Main>
       </AppShell>
     </>
   );
@@ -64,6 +75,14 @@ const router = createBrowserRouter([
       {
         path: '/dashboard',
         element: <Dashboard />,
+      },
+      {
+        path: '/cloud',
+        element: <Cloud />,
+      },
+      {
+        path: '/profile',
+        element: <Profile />,
       },
     ],
   },

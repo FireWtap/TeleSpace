@@ -21,6 +21,7 @@ instance.interceptors.response.use(
 
 const logout = () => {
   $token.set('');
+  window.location.href = '/';
 };
 
 export { instance, logout };
