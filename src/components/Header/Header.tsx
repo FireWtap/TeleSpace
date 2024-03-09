@@ -1,13 +1,30 @@
 import { Image, Container, Group, Title, Text, Avatar, Menu, rem } from '@mantine/core';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from '@/assets/logo.svg';
 import { useNavigate } from 'react-router-dom';
-import { logout } from '@/utils/api';
+import { instance, logout } from '@/utils/api';
 import { $token } from '@/stores/user';
 import { IconLogout, IconUser } from '@tabler/icons-react';
+import { onMount } from 'nanostores';
 
 function Header() {
   const navigate = useNavigate();
+
+  //avatar letters
+  const [initial, setInitial] = useState('');
+
+  useEffect(() => {
+    instance
+      .get('/me')
+      .then(function (response) {
+        const email: String = JSON.parse(response.data?.Ok).email;
+        setInitial(email.charAt(0).toUpperCase() + '@');
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <Group h="100%" px="md" style={{ width: '100%' }}>
       {' '}
@@ -35,7 +52,7 @@ function Header() {
       <Menu shadow="md" width={200}>
         <Menu.Target>
           <Avatar alt="Avatar" style={{ cursor: 'pointer' }}>
-            FM
+            {initial}
           </Avatar>
         </Menu.Target>
         <Menu.Dropdown>
@@ -49,7 +66,10 @@ function Header() {
             Profile
           </Menu.Item>
           <Menu.Item
-            onClick={() => logout}
+            onClick={() => {
+              logout();
+              navigate('/dashboard');
+            }}
             leftSection={<IconLogout style={{ width: rem(14), height: rem(14) }} />}
           >
             Logout

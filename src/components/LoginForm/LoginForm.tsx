@@ -11,6 +11,8 @@ import {
   Button,
   Image,
   Grid,
+  Alert,
+  LoadingOverlay,
 } from '@mantine/core';
 import classes from './LoginForm.module.css';
 import logo from '@/assets/logo.svg';
@@ -26,10 +28,7 @@ export function LoginForm() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [remember, setRemember] = useState(false);
-
-  useEffect(() => {
-    console.log(remember);
-  }, [remember]);
+  const [alertStatus, setAlertStatus] = useState({ show: false, success: false, message: '' });
 
   const loginForm = useForm({
     initialValues: {
@@ -46,18 +45,28 @@ export function LoginForm() {
     },
   });
 
+  const modifiedLoginHandler = async (values: { email: string; password: string }) => {
+    setLoading(true);
+    try {
+      const response = await loginHandler(values, remember);
+      if (response) {
+        setAlertStatus({ show: true, success: true, message: 'Login successful!' });
+        setTimeout(() => navigate('/dashboard'), 1000); // Redirezione dopo il successo
+      } else {
+        setAlertStatus({ show: true, success: false, message: 'Wrong credentials' });
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Container size={840} my={40} mt={100}>
-      {' '}
-      {/* Modifica la larghezza del Container per adattarsi a due colonne */}
       <Grid>
-        {/* Prima colonna per il logo e il messaggio di benvenuto */}
         <Grid.Col span={6}>
-          {' '}
-          {/* Imposta il numero di span in base alle tue necessità */}
           <Image
             src={logo}
-            h={200}
+            height={200}
             maw={200}
             mx="auto"
             mt={50}
@@ -65,23 +74,35 @@ export function LoginForm() {
             fallbackSrc="https://placehold.co/600x400?text=Logo"
             onClick={() => navigate('/')}
           ></Image>
-          <Title ta="center" className={classes.title}>
-            Welcome back!
-          </Title>
-          <Text c="dimmed" size="sm" ta="center" mt={5}>
+          <Title className={classes.title}>Welcome back!</Title>
+          <Text color="dimmed" size="sm" align="center" mt={5}>
             Do not have an account yet?{' '}
             <Anchor size="sm" component="button">
               Create account
             </Anchor>
           </Text>
         </Grid.Col>
-
-        {/* Seconda colonna per il form di login */}
         <Grid.Col span={6}>
-          {' '}
-          {/* Imposta il numero di span in base alle tue necessità */}
-          <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-            <form onSubmit={loginForm.onSubmit((values) => loginHandler(values, remember))}>
+          <LoadingOverlay
+            visible={loading}
+            zIndex={1000}
+            overlayProps={{ radius: 'sm', blur: 2 }}
+          />
+
+          <Paper withBorder shadow="md" p={20} mt={10} radius="sm">
+            {alertStatus.show && (
+              <Alert
+                color={alertStatus.success ? 'green' : 'red'}
+                title={alertStatus.success ? 'Success!' : 'Error!'}
+                withCloseButton
+                closeButtonLabel="Close"
+                onClose={() => setAlertStatus({ ...alertStatus, show: false })}
+                mb="md"
+              >
+                {alertStatus.message}
+              </Alert>
+            )}
+            <form onSubmit={loginForm.onSubmit(modifiedLoginHandler)}>
               <TextInput
                 label="Email"
                 placeholder="you@mantine.dev"
@@ -95,17 +116,17 @@ export function LoginForm() {
                 mt="md"
                 {...loginForm.getInputProps('password')}
               />
-              <Group justify="space-between" mt="lg">
+              <Group p="apart" mt="lg">
                 <Checkbox
                   checked={remember}
                   label="Remember me"
-                  onChange={(v) => setRemember(v.target.checked)}
+                  onChange={(event) => setRemember(event.currentTarget.checked)}
                 />
-                <Anchor component="button" size="sm">
+                <Anchor size="sm" component="button">
                   Forgot password?
                 </Anchor>
               </Group>
-              <Button type="submit" fullWidth mt="xl">
+              <Button type="submit" fullWidth mt="xl" loading={loading}>
                 Sign in
               </Button>
             </form>
