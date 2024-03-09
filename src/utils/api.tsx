@@ -24,4 +24,16 @@ const logout = () => {
   window.location.href = '/';
 };
 
-export { instance, logout };
+const getDirectoryName = (id) => {
+  instance
+    .get('/getDirectoryName/' + id)
+    .then((response) => {
+      if (response.data?.Ok != undefined) {
+        return response.data?.Ok;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+export { instance, logout, getDirectoryName };

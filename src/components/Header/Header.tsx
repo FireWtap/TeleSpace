@@ -17,6 +17,8 @@ function Header() {
     instance
       .get('/me')
       .then(function (response) {
+        console.log($token.get());
+        console.log(response);
         const email: String = JSON.parse(response.data?.Ok).email;
         setInitial(email.charAt(0).toUpperCase() + '@');
       })
