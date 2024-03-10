@@ -24,16 +24,28 @@ const logout = () => {
   window.location.href = '/';
 };
 
-const getDirectoryName = (id) => {
-  instance
-    .get('/getDirectoryName/' + id)
-    .then((response) => {
-      if (response.data?.Ok != undefined) {
-        return response.data?.Ok;
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+const getDirectoryName = async (id) => {
+  try {
+    const response = await instance.get('/getDirectoryName/' + id);
+    if (response.data?.Ok !== undefined) {
+      return response.data.Ok;
+    }
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 };
-export { instance, logout, getDirectoryName };
+
+const getParentDirectory = async (id) => {
+  try {
+    const response = await instance.get('/getParentDirectory/' + id);
+    if (response.data?.Ok !== undefined) {
+      return response.data.Ok;
+    }
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export { instance, logout, getDirectoryName, getParentDirectory };
