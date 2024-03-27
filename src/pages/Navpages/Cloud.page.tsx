@@ -2,9 +2,9 @@ import FileTable from '@/components/FileTable/FileTable';
 import UploadModal from '@/components/FileTable/Modals/UploadModal';
 import { $currentDir } from '@/stores/user';
 import { getDirectoryName, instance } from '@/utils/api';
-import { Button, DirectionContext, Group } from '@mantine/core';
+import { Button, DirectionContext, Group, rem } from '@mantine/core';
 import { useStore } from '@nanostores/react';
-import { IconArrowBack } from '@tabler/icons-react';
+import { IconArrowBack, IconUpload } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
 
 const getParentDirectory = async (id) => {
@@ -55,7 +55,12 @@ export default function Cloud() {
           )}
           <h1 style={{ textTransform: 'capitalize' }}>{dirname}</h1>
         </Group>
-        <Button onClick={openModal}>Upload</Button>
+        <Button
+          leftSection={<IconUpload style={{ width: rem(15), height: rem(15) }} />}
+          onClick={openModal}
+        >
+          Upload
+        </Button>
       </Group>
 
       <UploadModal opened={isModalOpen} onClose={closeModal} />

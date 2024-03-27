@@ -42,8 +42,8 @@ export default function UploadModal({ opened, onClose, ...props }) {
     setIsLoading(true);
 
     //Array of promises
-    const uploadPromises = filesList.map((f) => {
-      return instance.post('uploadFile', { file: f, dir: $currentDir.get() });
+    const uploadPromises = filesList.map((f: File) => {
+      return instance.post('uploadFile', { file: f, dir: $currentDir.get(), filename: f.name });
     });
     //Wait until all promises get satisfied
     Promise.all(uploadPromises)

@@ -29,8 +29,20 @@ import React, { Children, useEffect, useState } from 'react';
 import UploadModal from './Modals/UploadModal';
 import { formatBytes } from '@/utils/function_utils';
 import NewFolderModal from './Modals/NewFolderModal';
-import MenuToolTip from './MenuToolTip';
+import MenuToolTip from './MenuToolTip/MenuToolTip';
 import classes from './FileTable.module.css';
+
+interface FileDetails {
+  filename: string; // Nome del file
+  id: number; // Identificativo unico del file
+  last_download: string | null; // Data dell'ultima volta che il file è stato scaricato, può essere null
+  locally_stored: boolean | null; // Indica se il file è memorizzato localmente, può essere null
+  original_size: number; // Dimensione originale del file in byte
+  parent_dir: string | null; // Directory padre del file, può essere null
+  type: boolean; // Tipo del file, vero indica una certa categoria (ad es., directory o file eseguibile), falso un'altra
+  upload_time: string; // Data di caricamento del file
+  user: number; // Identificativo dell'utente che ha caricato il file
+}
 
 const loadFiles = (dir, f) => {
   instance
@@ -55,11 +67,10 @@ const previousFolder = async () => {
   changeDir(parentDir);
 };
 
-type ServerFile = any;
 //poi lo sistemi
 
 function FileTable() {
-  const [files, setFiles] = useState<ServerFile[]>([]);
+  const [files, setFiles] = useState<FileDetails[]>([]);
   const currentDir = useStore($currentDir);
 
   const [directoryName, setDirectoryName] = useState('Root Directory');
@@ -103,7 +114,7 @@ function FileTable() {
                   <IconFolder onClick={() => changeDir(file.id)} />
                   <Stack gap={0} onClick={() => changeDir(file.id)}>
                     <Title order={6}>{file.filename}</Title>
-                    <Text size="xs">Created on: {file?.upload_time?.split(' ')[0]}</Text>
+                    <Text size="xs">Created on: {file.upload_time.split(' ')[0]}</Text>
                   </Stack>
                   <MenuToolTip id={file.id} type="folder" className={classes.MenuToolTip} />
                 </Group>
@@ -145,6 +156,10 @@ function FileTable() {
                     <Stack gap={0}>
                       <Title order={6}>{file.filename.replace('./temp/', '')}</Title>
                       <Text size="xs">Created on: {file?.upload_time?.split(' ')[0]}</Text>
+                      <Text size="xs">Size: {formatBytes(file?.original_size)}</Text>
+                      <Text size="xs" color={!file?.locally_stored ? 'red' : 'green'}>
+                        {!file?.locally_stored ? 'Not locally available' : 'Locally available'}
+                      </Text>
                     </Stack>
                   </Group>
                   <MenuToolTip id={file.id} type="file" className={classes.MenuToolTip} />
