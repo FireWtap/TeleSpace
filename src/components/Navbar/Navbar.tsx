@@ -1,8 +1,9 @@
 import { IconCloudComputing, IconDashboard } from '@tabler/icons-react';
 import React, { useState } from 'react';
 import classes from './Navbar.module.css';
-import { Code, Group } from '@mantine/core';
-import { useNavigate } from 'react-router-dom';
+import { Code, Group, rgba } from '@mantine/core';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { theme } from '@/theme';
 
 export default function Navbar() {
   const [active, setActive] = useState('Dashboard');
@@ -12,20 +13,23 @@ export default function Navbar() {
     { link: '/cloud', label: 'Cloud', icon: IconCloudComputing },
   ];
   const links = linksList.map((item) => (
-    <a
+    <NavLink
       className={classes.link}
       data-active={item.label === active || undefined}
-      href={item.link}
+      to={item.link}
       key={item.label}
-      onClick={(event) => {
-        event.preventDefault();
-        setActive(item.label);
-        navigate(item.link);
+      style={({ isActive, isPending, isTransitioning }) => {
+        return {
+          fontWeight: isActive ? 'bold' : '',
+          color: isPending ? 'red' : 'black',
+          viewTransitionName: isTransitioning ? 'slide' : '',
+          backgroundColor: isActive ? rgba('#add8e6', 0.5) : '',
+        };
       }}
     >
       <item.icon className={classes.linkIcon} stroke={1.5} />
       <span>{item.label}</span>
-    </a>
+    </NavLink>
   ));
 
   return (

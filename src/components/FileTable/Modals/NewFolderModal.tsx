@@ -41,6 +41,7 @@ export default function NewFolderModal({ opened, onClose, ...props }) {
         }
       })
       .catch(function (error) {
+        onClose();
         console.log(error);
       });
   }

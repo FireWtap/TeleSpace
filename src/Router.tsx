@@ -12,6 +12,7 @@ import Navbar from './components/Navbar/Navbar';
 import Header from './components/Header/Header';
 import Profile from './pages/Profile.page';
 import Cloud from './pages/Navpages/Cloud.page';
+import App from './App';
 
 function NonLoggedIn() {
   return (
@@ -39,6 +40,7 @@ export default function RouteGuard() {
           breakpoint: 'sm',
           collapsed: { mobile: !opened },
         }}
+        footer={{ height: 60 }}
         padding="md"
       >
         <AppShell.Header>
@@ -50,6 +52,9 @@ export default function RouteGuard() {
         <AppShell.Main>
           <Outlet />
         </AppShell.Main>
+        <AppShell.Footer>
+          <FooterCentered />
+        </AppShell.Footer>
       </AppShell>
     </>
   );

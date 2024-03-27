@@ -16,7 +16,6 @@ export const $isLoggedIn = computed($token, (token) => {
 });
 
 export const $currentDir = persistentAtom('currentDir', -1, {
-  // <--- Add this line to create a new atom
   encode: JSON.stringify,
   decode: JSON.parse,
 });

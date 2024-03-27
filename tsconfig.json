@@ -19,7 +19,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "@test-utils": ["./test-utils"]
-    }
+    },
+    "noImplicitAny": false
   },
   "include": ["src", "test-utils"]
 }
