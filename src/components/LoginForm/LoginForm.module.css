@@ -3,4 +3,21 @@
     Greycliff CF,
     var(--mantine-font-family);
   font-weight: 900;
+  text-align: center;
+}
+
+.title p {
+  text-align: center;
+}
+
+.loginElement {
+  display: grid;
+  place-items: center;
+}
+
+.pageContainer {
+  min-height: 99vh;
+  display: grid;
+  place-items: center;
+  place-content: center;
 }

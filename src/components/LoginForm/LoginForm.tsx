@@ -61,28 +61,27 @@ export function LoginForm() {
   };
 
   return (
-    <Container size={840} my={40} mt={100}>
-      <Grid>
-        <Grid.Col span={6}>
+    <Container className={classes.pageContainer}>
+      <Grid columns={12}>
+        <Grid.Col span={{ md: 6, sm: 12 }}>
           <Image
             src={logo}
             height={200}
             maw={200}
             mx="auto"
-            mt={50}
             mb={0}
             fallbackSrc="https://placehold.co/600x400?text=Logo"
             onClick={() => navigate('/')}
           ></Image>
           <Title className={classes.title}>Welcome back!</Title>
-          <Text color="dimmed" size="sm" align="center" mt={5}>
+          <Text color="dimmed" style={{ textAlign: 'center' }} size="sm" mt={5}>
             Do not have an account yet?{' '}
             <Anchor size="sm" component="button">
               Create account
             </Anchor>
           </Text>
         </Grid.Col>
-        <Grid.Col span={6}>
+        <Grid.Col span={{ md: 6, sm: 12 }} className={classes.loginElement}>
           <LoadingOverlay
             visible={loading}
             zIndex={1000}

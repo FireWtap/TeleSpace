@@ -1,0 +1,11 @@
+.Card:hover {
+  /* fai ombra bella */
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); */
+  transform: translateY(-4px);
+  opacity: 0.9;
+}
+
+.Card {
+  transition: all 100ms ease-in-out;
+  cursor: pointer;
+}

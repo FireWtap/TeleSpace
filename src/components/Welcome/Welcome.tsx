@@ -19,13 +19,13 @@ export function Welcome() {
         fallbackSrc="https://placehold.co/600x400?text=Logo"
         onClick={() => navigate('/')}
       ></Image>
-      <Title align="center" size="50">
+      <Title size="50" ta="center">
         Welcome to{' '}
         <Text inherit variant="gradient" component="span" gradient={{ from: 'blue', to: 'purple' }}>
           TeleSpace
         </Text>
       </Title>
-      <Text color="dimmed" align="center" size="xxl" maw={520} mx="auto" mt="xl">
+      <Text color="dimmed" size="xxl" maw={520} mx="auto" mt="xl">
         This service allows you to have access to unlimited storage space, by leveraging Telegram
         Bots and their API to securely store as much data as you want.
       </Text>
@@ -35,13 +35,13 @@ export function Welcome() {
           gradient={{ from: 'indigo', to: 'grape', deg: 233 }}
           style={{
             border: 0,
-            transition: 'transform 0.5s ease', // Aggiunge un'animazione fluida
+            transition: 'transform 0.5s ease',
             borderRadius: 0,
             minWidth: '20%',
           }}
           leftSection={<IconLogin size="20" />}
-          onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.1)')} // Ingrandisce il bottone
-          onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')} // Ritorna il bottone alla dimensione originale
+          onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.1)')}
+          onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
           onClick={() => navigate('/login')}
           radius="xs"
           mt="xl"
