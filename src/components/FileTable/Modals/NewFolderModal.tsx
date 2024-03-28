@@ -1,6 +1,6 @@
 import { $currentDir } from '@/stores/user';
 import { instance } from '@/utils/api';
-import { Alert, Box, Button, Flex, Input, Modal } from '@mantine/core';
+import { Alert, Box, Button, Flex, Input, Modal, Stack, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import { showNotification } from '@mantine/notifications';
@@ -15,10 +15,7 @@ export default function NewFolderModal({ opened, onClose, onSubmit, ...props }) 
       folderName: '',
     },
     validate: {
-      folderName: (value) =>
-        /^[a-zA-Z0-9]{1,19}$/.test(value)
-          ? null
-          : "Special character aren't allowed and the folder name must be under 20 charaters.",
+      folderName: (value) => (/^[a-zA-Z0-9]{1,19}$/.test(value) ? null : 'Invalid folder name'),
     },
   });
 
@@ -46,14 +43,8 @@ export default function NewFolderModal({ opened, onClose, onSubmit, ...props }) 
 
   return (
     <>
-      <Modal
-        opened={opened}
-        onClose={onClose}
-        title="New folder"
-        withCloseButton
-        transitionProps={{ transition: 'rotate-left' }}
-      >
-        <Box>
+      <Modal opened={opened} onClose={onClose} title="New folder" withCloseButton>
+        <Stack>
           <form onSubmit={createFolderForm.onSubmit((values) => handleCreateFolderSubmit(values))}>
             <Flex align="flex-start" gap="sm">
               <Input
@@ -64,16 +55,7 @@ export default function NewFolderModal({ opened, onClose, onSubmit, ...props }) 
               <Button type="submit">Add Folder</Button>
             </Flex>
           </form>
-          <Alert
-            mt={10}
-            variant="light"
-            color={alertProps.color}
-            title="Alert title"
-            hidden={alertProps.visibility}
-          >
-            {alertProps.alertText}
-          </Alert>
-        </Box>
+        </Stack>
       </Modal>
     </>
   );

@@ -23,7 +23,6 @@ export default function Cloud() {
   const currentDir = useStore($currentDir);
 
   const [dirname, setDirname] = useState('Cloud');
-  const [breadcrumb, setBreadcrumb] = useState([]);
 
   useEffect(() => {
     if (currentDir == -1) {
@@ -56,8 +55,6 @@ export default function Cloud() {
       </Group>
 
       <FileTable></FileTable>
-
-      {/*<FileTable />*/}
     </>
   );
 }

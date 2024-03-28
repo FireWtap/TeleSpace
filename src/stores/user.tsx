@@ -14,3 +14,5 @@ export const $currentDir = persistentAtom('currentDir', -1, {
   encode: JSON.stringify,
   decode: JSON.parse,
 });
+
+export const $currentSelectedId = atom(-1);

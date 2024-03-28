@@ -1,6 +1,6 @@
-import { $currentDir } from '@/stores/user';
+import { $currentDir, $currentSelectedId } from '@/stores/user';
 import { useStore } from '@nanostores/react';
-import { getDirectoryName, getParentDirectory, instance } from '@/utils/api';
+import { getDirectoryName, getFileInfo, getParentDirectory, instance } from '@/utils/api';
 import {
   Box,
   Button,
@@ -8,6 +8,7 @@ import {
   Flex,
   Group,
   Menu,
+  Modal,
   Paper,
   Stack,
   Table,
@@ -18,6 +19,7 @@ import {
 import {
   IconArrowBack,
   IconCheck,
+  IconDownload,
   IconFile,
   IconFold,
   IconFolder,
@@ -32,6 +34,9 @@ import { formatBytes } from '@/utils/function_utils';
 import NewFolderModal from './Modals/NewFolderModal';
 import MenuToolTip from './MenuToolTip/MenuToolTip';
 import classes from './FileTable.module.css';
+import { useDisclosure } from '@mantine/hooks';
+import DownloadModal from './Modals/DownloadModal';
+import DeleteModal from './Modals/DeleteModal';
 
 interface FileDetails {
   filename: string; // Nome del file
@@ -43,6 +48,13 @@ interface FileDetails {
   type: boolean; // Tipo del file, vero indica una certa categoria (ad es., directory o file eseguibile), falso un'altra
   upload_time: string; // Data di caricamento del file
   user: number; // Identificativo dell'utente che ha caricato il file
+}
+
+interface FileInfos {
+  filename: string;
+  last_download: string | null;
+  locally_stored: boolean | null;
+  type: boolean;
 }
 
 const loadFiles = (dir, f) => {
@@ -63,33 +75,38 @@ const changeDir = (new_dir) => {
   $currentDir.set(new_dir);
 };
 
-const previousFolder = async () => {
-  const parentDir = await getParentDirectory($currentDir.get());
-  changeDir(parentDir);
-};
-
-//poi lo sistemi
-
 function FileTable() {
-  const [isModalOpen, setModalOpen] = useState(false);
-
-  const openModal = () => setModalOpen(true);
-  const closeModal = () => setModalOpen(false);
+  const [uploadModal, { open: openUpload, close: closeUpload }] = useDisclosure(false);
 
   const [files, setFiles] = useState<FileDetails[]>([]);
-  const currentDir = useStore($currentDir);
 
+  const currentDir = useStore($currentDir);
+  const currentSelectedId = useStore($currentSelectedId);
+
+  const [currentFileInfo, setCurrentFileInfo] = useState({} as FileInfos);
   const [directoryName, setDirectoryName] = useState('Root Directory');
 
-  //new folder modal
-  const [isFolderModalOpen, setFolderModalOpen] = useState(false);
-  const openModalFolder = () => setFolderModalOpen(true);
-  const closeModalFolder = () => setFolderModalOpen(false);
+  const [isFolderModalOpen, { open: openModalFolder, close: closeModalFolder }] =
+    useDisclosure(false);
+
+  const [openedModalDownload, { open: openDownload, close: closeDownload }] = useDisclosure(false);
+
+  const [openedModalDelete, { open: openModalDelete, close: closeModalDelete }] =
+    useDisclosure(false);
 
   useEffect(() => {
     console.log('Current dir' + $currentDir.get());
     loadFiles($currentDir.get(), setFiles);
   }, []);
+
+  //aggiorna ogni volta che vediamo un nuovo id selezionato
+  useEffect(() => {
+    getFileInfo(currentSelectedId).then((info) => {
+      if (info) {
+        setCurrentFileInfo(info);
+      }
+    });
+  }, [currentSelectedId]);
 
   useEffect(() => {
     const updateDirectoryName = async () => {
@@ -113,7 +130,6 @@ function FileTable() {
         {files
           .filter((f) => f?.type)
           .map((file, index) => {
-            //{"filename":"pescerossopep","id":2,"last_download":null,"locally_stored":null,"original_size":0,"parent_dir":null,"type":true,"upload_time":"2024-03-10 18:35:04","user":1}
             return (
               <Paper radius="lg" bg="whitesmoke" p={16} className={classes.Card}>
                 <Group>
@@ -128,6 +144,8 @@ function FileTable() {
                     type="folder"
                     className={classes.MenuToolTip}
                     locally_stored={file.locally_stored}
+                    download_modal={() => {}}
+                    delete_modal={() => openModalDelete()}
                   />
                 </Group>
               </Paper>
@@ -157,7 +175,7 @@ function FileTable() {
         </Title>
         <Button
           leftSection={<IconUpload style={{ width: rem(15), height: rem(15) }} />}
-          onClick={openModal}
+          onClick={() => openUpload()}
         >
           Upload
         </Button>
@@ -188,6 +206,8 @@ function FileTable() {
                     type="file"
                     className={classes.MenuToolTip}
                     locally_stored={file.locally_stored}
+                    download_modal={() => openDownload()}
+                    delete_modal={() => openModalDelete()}
                   />
                 </Group>
               </Paper>
@@ -201,8 +221,19 @@ function FileTable() {
         onSubmit={() => loadFiles(currentDir, setFiles)}
       />
       <UploadModal
-        opened={isModalOpen}
-        onClose={closeModal}
+        opened={uploadModal}
+        onClose={() => closeUpload()}
+        onSubmit={() => loadFiles(currentDir, setFiles)}
+      />
+      <DownloadModal
+        currentFileInfo={currentFileInfo}
+        openedModalDownload={openedModalDownload}
+        closeDownload={closeDownload}
+      />
+      <DeleteModal
+        openedModalDelete={openedModalDelete}
+        closeModalDelete={() => closeModalDelete()}
+        currentFileInfo={currentFileInfo}
         onSubmit={() => loadFiles(currentDir, setFiles)}
       />
     </>
