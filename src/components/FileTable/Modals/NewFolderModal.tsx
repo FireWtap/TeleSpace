@@ -3,10 +3,11 @@ import { instance } from '@/utils/api';
 import { Alert, Box, Button, Flex, Input, Modal } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
-import { IconPlus } from '@tabler/icons-react';
+import { showNotification } from '@mantine/notifications';
+import { IconCheck, IconPlus } from '@tabler/icons-react';
 import { useState } from 'react';
 
-export default function NewFolderModal({ opened, onClose, ...props }) {
+export default function NewFolderModal({ opened, onClose, onSubmit, ...props }) {
   const [loadingVisible, { toggle }] = useDisclosure(false);
   const [alertProps, setAlertProps] = useState({ visibility: true, alertText: '', color: '' });
   const createFolderForm = useForm({
@@ -27,16 +28,13 @@ export default function NewFolderModal({ opened, onClose, ...props }) {
       .then(function (response) {
         console.log(response);
         if (response.data.Ok != undefined) {
-          setAlertProps({
-            visibility: false,
-            alertText: 'Folder successfully created',
+          onClose();
+          onSubmit();
+          showNotification({
+            title: 'Folder created',
+            message: 'The folder has been successfully created.',
+            icon: <IconCheck />,
             color: 'green',
-          });
-        } else {
-          setAlertProps({
-            visibility: false,
-            alertText: response.data.BadRequest,
-            color: 'red',
           });
         }
       })

@@ -23,6 +23,7 @@ import {
   IconFolder,
   IconFolderPlus,
   IconPlus,
+  IconUpload,
   IconX,
 } from '@tabler/icons-react';
 import React, { Children, useEffect, useState } from 'react';
@@ -70,6 +71,11 @@ const previousFolder = async () => {
 //poi lo sistemi
 
 function FileTable() {
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
+
   const [files, setFiles] = useState<FileDetails[]>([]);
   const currentDir = useStore($currentDir);
 
@@ -116,7 +122,13 @@ function FileTable() {
                     <Title order={6}>{file.filename}</Title>
                     <Text size="xs">Created on: {file.upload_time.split(' ')[0]}</Text>
                   </Stack>
-                  <MenuToolTip id={file.id} type="folder" className={classes.MenuToolTip} />
+                  <MenuToolTip
+                    onSubmit={() => loadFiles(currentDir, setFiles)}
+                    id={file.id}
+                    type="folder"
+                    className={classes.MenuToolTip}
+                    locally_stored={file.locally_stored}
+                  />
                 </Group>
               </Paper>
             );
@@ -139,10 +151,18 @@ function FileTable() {
           </Group>
         </Paper>
       </Group>
+      <Group justify="space-between">
+        <Title order={4} mb="sm" mt="xl">
+          Files
+        </Title>
+        <Button
+          leftSection={<IconUpload style={{ width: rem(15), height: rem(15) }} />}
+          onClick={openModal}
+        >
+          Upload
+        </Button>
+      </Group>
 
-      <Title order={4} mb="sm" mt="xl">
-        Files
-      </Title>
       <Stack>
         {files
           .filter((f) => !f?.type)
@@ -162,13 +182,29 @@ function FileTable() {
                       </Text>
                     </Stack>
                   </Group>
-                  <MenuToolTip id={file.id} type="file" className={classes.MenuToolTip} />
+                  <MenuToolTip
+                    onSubmit={() => loadFiles(currentDir, setFiles)}
+                    id={file.id}
+                    type="file"
+                    className={classes.MenuToolTip}
+                    locally_stored={file.locally_stored}
+                  />
                 </Group>
               </Paper>
             );
           })}
       </Stack>
-      <NewFolderModal opened={isFolderModalOpen} onClose={closeModalFolder} />
+
+      <NewFolderModal
+        opened={isFolderModalOpen}
+        onClose={closeModalFolder}
+        onSubmit={() => loadFiles(currentDir, setFiles)}
+      />
+      <UploadModal
+        opened={isModalOpen}
+        onClose={closeModal}
+        onSubmit={() => loadFiles(currentDir, setFiles)}
+      />
     </>
   );
 }

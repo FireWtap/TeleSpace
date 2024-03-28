@@ -9,7 +9,7 @@ import { instance } from '@/utils/api';
 import { $currentDir } from '@/stores/user';
 import { showNotification } from '@mantine/notifications';
 
-export default function UploadModal({ opened, onClose, ...props }) {
+export default function UploadModal({ opened, onClose, onSubmit, ...props }) {
   const [filesList, setFilesList] = useState([]);
   const [filesStackList, setFilesStackList] = useState([]);
   // const [loadingVisible, { toggle }] = useDisclosure(false);
@@ -50,6 +50,7 @@ export default function UploadModal({ opened, onClose, ...props }) {
       .then(function (responses) {
         console.log('Tutti gli upload sono completati', responses);
         setIsLoading(false);
+        onSubmit();
         showNotification({
           title: 'Upload Scheduled',
           message:

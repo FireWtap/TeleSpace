@@ -21,12 +21,14 @@ const loginHandler = async (values: { email: string; password: string }, remembe
 
     console.log(response);
     if (response?.data?.Ok) {
+      console.log('response:' + response.data.Ok);
       $token.set(response.data.Ok);
+      console.log('setted: ' + $token.get());
 
-      if (remember) {
+      /*if (remember) {
         const cookies = new Cookies();
         cookies.set('token', response.data.Ok, { path: '/' });
-      }
+      }*/
 
       console.log($token.get());
       return true;

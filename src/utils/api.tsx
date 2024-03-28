@@ -5,10 +5,22 @@ import { API_URL } from './API_URL';
 const instance = axios.create({
   baseURL: API_URL,
   headers: {
-    Authorization: `Bearer ${$token.get()}`, //Assume that this cannot be called from routes where the user is required to be logged in but he's not
     'Content-Type': 'multipart/form-data',
   },
 });
+
+instance.interceptors.request.use(
+  (config) => {
+    const token = $token.get();
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    console.log(error);
+  }
+);
 
 instance.interceptors.response.use(
   (response) => {
@@ -36,7 +48,7 @@ const getDirectoryName = async (id) => {
   }
 };
 
-const getParentDirectory = async (id) => {
+const getParentDirectory = async (id: Number) => {
   try {
     const response = await instance.get('/getParentDirectory/' + id);
     if (response.data?.Ok !== undefined) {

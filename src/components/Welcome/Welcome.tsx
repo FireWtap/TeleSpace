@@ -1,5 +1,5 @@
 import React from 'react';
-import { Title, Text, Button, Group, Image } from '@mantine/core';
+import { Title, Text, Button, Group, Image, rem } from '@mantine/core';
 import { IconEdit, IconLogin, IconRegistered } from '@tabler/icons-react';
 // Non c'è bisogno di importare classes se si usano solo le props di Mantine per lo styling
 import logo from '@/assets/logo.svg';
@@ -25,7 +25,7 @@ export function Welcome() {
           TeleSpace
         </Text>
       </Title>
-      <Text color="dimmed" size="xxl" maw={520} mx="auto" mt="xl">
+      <Text color="dimmed" size="xxl" maw={520} mx="auto" mt="xl" ta="center" p={rem(15)}>
         This service allows you to have access to unlimited storage space, by leveraging Telegram
         Bots and their API to securely store as much data as you want.
       </Text>
