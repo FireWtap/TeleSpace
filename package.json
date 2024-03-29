@@ -24,7 +24,7 @@
     "@mantine/dropzone": "^7.6.1",
     "@mantine/form": "^7.6.1",
     "@mantine/hooks": "7.6.1",
-    "@mantine/notifications": "^7.6.1",
+    "@mantine/notifications": "^7.7.0",
     "@nanostores/persistent": "^0.10.1",
     "@nanostores/react": "^0.7.2",
     "@tabler/icons-react": "^2.47.0",

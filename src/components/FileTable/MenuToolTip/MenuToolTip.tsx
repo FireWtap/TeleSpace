@@ -3,6 +3,7 @@ import { Button, Flex, Menu, Popover, Stack, Text, rem } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 import {
   IconCheck,
+  IconDatabase,
   IconDots,
   IconDotsVertical,
   IconDownload,
@@ -23,8 +24,13 @@ export default function MenuToolTip({
   locally_stored,
   download_modal,
   delete_modal,
+  clear_cache_modal,
   ...props
 }) {
+  onSubmit = () => {
+    onSubmit();
+    $currentSelectedId.set(-1); // After submitting we're not selecting any file
+  };
   return (
     <>
       <Menu shadow="md">
@@ -52,9 +58,24 @@ export default function MenuToolTip({
           ) : (
             ''
           )}
+
           <Menu.Item leftSection={<IconEdit style={{ width: rem(14), height: rem(14) }} />}>
             Rename
           </Menu.Item>
+          <Menu.Divider />
+          {locally_stored ? (
+            <Menu.Item
+              onClick={() => {
+                clear_cache_modal();
+              }}
+              color="red"
+              leftSection={<IconDatabase style={{ width: rem(14), height: rem(14) }} />}
+            >
+              Clear Cache
+            </Menu.Item>
+          ) : (
+            ''
+          )}
           <Menu.Item
             onClick={() => {
               delete_modal();
@@ -64,9 +85,6 @@ export default function MenuToolTip({
           >
             Delete
           </Menu.Item>
-          {/* {type == 'folder'
-            ? deleteFolderPopover(id, () => onSubmit())
-            : deleteFilePopover(id, () => onSubmit())} */}
         </Menu.Dropdown>
       </Menu>
     </>

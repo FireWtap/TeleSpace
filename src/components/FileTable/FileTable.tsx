@@ -1,4 +1,4 @@
-import { $currentDir, $currentSelectedId } from '@/stores/user';
+import { $currentDir, $currentFileInfo, $currentSelectedId } from '@/stores/user';
 import { useStore } from '@nanostores/react';
 import { getDirectoryName, getFileInfo, getParentDirectory, instance } from '@/utils/api';
 import {
@@ -37,6 +37,7 @@ import classes from './FileTable.module.css';
 import { useDisclosure } from '@mantine/hooks';
 import DownloadModal from './Modals/DownloadModal';
 import DeleteModal from './Modals/DeleteModal';
+import ClearCacheModal from './Modals/ClearCacheModal';
 
 interface FileDetails {
   filename: string; // Nome del file
@@ -82,16 +83,15 @@ function FileTable() {
 
   const currentDir = useStore($currentDir);
   const currentSelectedId = useStore($currentSelectedId);
+  const currentFileInfo = useStore($currentFileInfo);
 
-  const [currentFileInfo, setCurrentFileInfo] = useState({} as FileInfos);
   const [directoryName, setDirectoryName] = useState('Root Directory');
-
   const [isFolderModalOpen, { open: openModalFolder, close: closeModalFolder }] =
     useDisclosure(false);
-
   const [openedModalDownload, { open: openDownload, close: closeDownload }] = useDisclosure(false);
-
   const [openedModalDelete, { open: openModalDelete, close: closeModalDelete }] =
+    useDisclosure(false);
+  const [openedModalClearCache, { open: openModalClearCache, close: closeModalClearCache }] =
     useDisclosure(false);
 
   useEffect(() => {
@@ -103,7 +103,7 @@ function FileTable() {
   useEffect(() => {
     getFileInfo(currentSelectedId).then((info) => {
       if (info) {
-        setCurrentFileInfo(info);
+        $currentFileInfo.set(info);
       }
     });
   }, [currentSelectedId]);
@@ -146,6 +146,7 @@ function FileTable() {
                     locally_stored={file.locally_stored}
                     download_modal={() => {}}
                     delete_modal={() => openModalDelete()}
+                    clear_cache_modal={() => openModalClearCache()}
                   />
                 </Group>
               </Paper>
@@ -208,6 +209,7 @@ function FileTable() {
                     locally_stored={file.locally_stored}
                     download_modal={() => openDownload()}
                     delete_modal={() => openModalDelete()}
+                    clear_cache_modal={() => openModalClearCache()}
                   />
                 </Group>
               </Paper>
@@ -225,14 +227,16 @@ function FileTable() {
         onClose={() => closeUpload()}
         onSubmit={() => loadFiles(currentDir, setFiles)}
       />
-      <DownloadModal
-        currentFileInfo={currentFileInfo}
-        openedModalDownload={openedModalDownload}
-        closeDownload={closeDownload}
-      />
+      <DownloadModal openedModalDownload={openedModalDownload} closeDownload={closeDownload} />
       <DeleteModal
         openedModalDelete={openedModalDelete}
         closeModalDelete={() => closeModalDelete()}
+        currentFileInfo={currentFileInfo}
+        onSubmit={() => loadFiles(currentDir, setFiles)}
+      />
+      <ClearCacheModal
+        openedModalClearCache={openedModalClearCache}
+        closeModalClearCache={closeModalClearCache}
         currentFileInfo={currentFileInfo}
         onSubmit={() => loadFiles(currentDir, setFiles)}
       />

@@ -1,10 +1,18 @@
-import { $currentSelectedId, $token } from '@/stores/user';
+import { $currentFileInfo, $currentSelectedId, $token } from '@/stores/user';
 import { API_URL } from '@/utils/API_URL';
 import { instance } from '@/utils/api';
 import { Button, Flex, Group, Modal, Text, rem } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 import { useStore } from '@nanostores/react';
 import { IconCheck, IconDownload } from '@tabler/icons-react';
+import { useEffect } from 'react';
+
+interface FileInfos {
+  filename: string;
+  last_download: string | null;
+  locally_stored: boolean | null;
+  type: boolean;
+}
 
 function downloadFile(id) {
   //not stored locally
@@ -24,18 +32,15 @@ function downloadFile(id) {
     .finally(() => {});
 }
 
-export default function DownloadModal({
-  openedModalDownload,
-  closeDownload,
-  currentFileInfo,
-  ...props
-}) {
+export default function DownloadModal({ openedModalDownload, closeDownload, ...props }) {
   const currentSelectedId = useStore($currentSelectedId);
+  const currentFileInfo = useStore($currentFileInfo);
+
   return (
     <>
       <Modal opened={openedModalDownload} onClose={closeDownload} title="Download file">
         <Group justify="center">
-          {currentFileInfo.locally_stored ? (
+          {currentFileInfo?.locally_stored ? (
             <Text size="xs">
               The file is locally available. Do you want to download it directly?
             </Text>
@@ -47,7 +52,7 @@ export default function DownloadModal({
           )}
 
           <Flex gap="md">
-            {currentFileInfo.locally_stored ? (
+            {currentFileInfo?.locally_stored ? (
               <a
                 href={API_URL + '/downloadLocalFile/' + $token.get() + '/' + currentSelectedId}
                 download

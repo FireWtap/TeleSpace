@@ -16,3 +16,5 @@ export const $currentDir = persistentAtom('currentDir', -1, {
 });
 
 export const $currentSelectedId = atom(-1);
+
+export const $currentFileInfo = atom({});
