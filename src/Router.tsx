@@ -47,7 +47,7 @@ export default function RouteGuard() {
           <Header />
         </AppShell.Header>
         <AppShell.Navbar>
-          <Navbar />
+          <Navbar toggle={() => toggle()} />
         </AppShell.Navbar>
         <AppShell.Main>
           <Outlet />

@@ -1,11 +1,12 @@
-import { IconCloudComputing, IconDashboard } from '@tabler/icons-react';
+import { IconCloudComputing, IconDashboard, IconMenu } from '@tabler/icons-react';
 import React, { useState } from 'react';
 import classes from './Navbar.module.css';
-import { Code, Group, rgba } from '@mantine/core';
+import { Button, Code, Group, rgba } from '@mantine/core';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { theme } from '@/theme';
+import { useMediaQuery } from '@mantine/hooks';
 
-export default function Navbar() {
+export default function Navbar({ toggle, ...props }) {
   const [active, setActive] = useState('Dashboard');
   const navigate = useNavigate();
   const linksList = [
