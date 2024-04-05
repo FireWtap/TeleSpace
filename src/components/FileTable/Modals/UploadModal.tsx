@@ -34,7 +34,6 @@ export default function UploadModal({ opened, onClose, onSubmit, ...props }) {
       </Button>
     ));
     setFilesStackList(buttons);
-    console.log(filesStackList);
   }
 
   function uploadFiles() {
@@ -88,7 +87,7 @@ export default function UploadModal({ opened, onClose, onSubmit, ...props }) {
         <Dropzone
           onDrop={(files) => onDrop(files)}
           onReject={(files) => console.log('rejected files', files)}
-          maxSize={5 * 1024 ** 3}
+          maxSize={10 * 1024 ** 3}
           maxFiles={3}
           {...props}
         >
@@ -117,7 +116,7 @@ export default function UploadModal({ opened, onClose, onSubmit, ...props }) {
                 Drag images here or click to select files
               </Text>
               <Text size="sm" color="dimmed" inline mt={3}>
-                Attach files up to 5MB each. Max 3 files at once.
+                Attach files up to 10GB each. Max 3 files at once.
                 <br /> Uploading new file will reset the list.
               </Text>
             </div>

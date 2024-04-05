@@ -1,7 +1,7 @@
 import { instance } from '@/utils/api';
 import { Card, CardSection, Paper, Table, Text, rem } from '@mantine/core';
 import { IconCheck, IconClockPause, IconRefresh } from '@tabler/icons-react';
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 export default function TaskTable() {
   //    "Ok": "[{\"add_time\":\"2024-03-28 22:54:30\",\"completion_time\":\"2024-03-28 22:54:43\",\"id\":\"03ad0abc-7f5d-4537-8229-a26760d113ff\",\"name\":51,\"status\":\"COMPLETED\",
@@ -23,7 +23,13 @@ export default function TaskTable() {
 
   useEffect(() => {
     let newBody = tasks.map(
-      (task: { id: number; name: number | string; add_time: string; status: string }) => {
+      (task: {
+        id: number;
+        name: number | string;
+        add_time: string;
+        status: string;
+        filename: string;
+      }) => {
         let status =
           task.status === 'COMPLETED' ? (
             <IconCheck color="green" />
@@ -32,7 +38,9 @@ export default function TaskTable() {
           ) : (
             <IconClockPause color="red" />
           );
-        return [task.id, task.name, task.add_time, status];
+        let filename =
+          task.filename.length < 20 ? task.filename : task.filename.slice(0, 20) + '...';
+        return [task.id, filename, task.add_time, status];
       }
     );
     setBody(newBody);

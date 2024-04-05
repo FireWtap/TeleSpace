@@ -62,7 +62,6 @@ const loadFiles = (dir, f) => {
   instance
     .get('/listDirectory/' + dir)
     .then((response) => {
-      console.log(response.data?.Ok);
       const data = JSON.parse(response.data?.Ok);
       f(data);
     })
@@ -72,7 +71,6 @@ const loadFiles = (dir, f) => {
 };
 
 const changeDir = (new_dir) => {
-  console.log($currentDir.get());
   $currentDir.set(new_dir);
 };
 
@@ -95,7 +93,6 @@ function FileTable() {
     useDisclosure(false);
 
   useEffect(() => {
-    console.log('Current dir' + $currentDir.get());
     loadFiles($currentDir.get(), setFiles);
   }, []);
 

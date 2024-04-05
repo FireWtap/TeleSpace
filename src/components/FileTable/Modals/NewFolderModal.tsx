@@ -23,7 +23,6 @@ export default function NewFolderModal({ opened, onClose, onSubmit, ...props }) 
     instance
       .post('/createDir', { name: values.folderName, parent: $currentDir.get() })
       .then(function (response) {
-        console.log(response);
         if (response.data.Ok != undefined) {
           onClose();
           onSubmit();

@@ -13,6 +13,7 @@ import Header from './components/Header/Header';
 import Profile from './pages/Profile.page';
 import Cloud from './pages/Navpages/Cloud.page';
 import App from './App';
+import Offline from './components/Offline/Offline';
 
 function NonLoggedIn() {
   return (
@@ -90,6 +91,10 @@ const router = createBrowserRouter([
         element: <Profile />,
       },
     ],
+  },
+  {
+    path: '/offline',
+    element: <Offline />,
   },
 ]);
 
