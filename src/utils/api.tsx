@@ -72,4 +72,15 @@ const getFileInfo = async (id: Number) => {
   }
 };
 
-export { instance, logout, getDirectoryName, getParentDirectory, getFileInfo };
+const getMe = async () => {
+  try {
+    const response = await instance.get('/me');
+    if (response.data?.Ok !== undefined) {
+      return response.data.Ok;
+    }
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+export { instance, logout, getDirectoryName, getParentDirectory, getFileInfo, getMe };
