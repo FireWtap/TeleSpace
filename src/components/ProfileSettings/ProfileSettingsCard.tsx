@@ -29,7 +29,11 @@ export default function ProfileSettingsCard() {
         if (response.data.Ok == 'true') {
           //Fine we can update it
           updateBotToken(botToken).then((response) => {
-            setAlertStatus({ show: true, success: true, message: 'Token updated!' });
+            setAlertStatus({
+              show: true,
+              success: true,
+              message: 'Token updated! All data will be erased tho.',
+            });
           });
         } else {
           setAlertStatus({ show: true, success: false, message: "Invalid Token! Won't update" });
@@ -65,37 +69,36 @@ export default function ProfileSettingsCard() {
   });
 
   return (
-    <>
-      <Paper withBorder shadow="md" p={20} mt={10} radius="sm">
-        {alertStatus.show && (
-          <Alert
-            color={alertStatus.success ? 'green' : 'red'}
-            title={alertStatus.success ? 'Success!' : 'Error!'}
-            withCloseButton
-            closeButtonLabel="Close"
-            onClose={() => setAlertStatus({ ...alertStatus, show: false })}
-            mb="md"
-          >
-            {alertStatus.message}
-          </Alert>
-        )}
-        <form
-          onSubmit={ProfileSettings.onSubmit((values) => {
-            handleChangeToken(values);
-          })}
+    <Paper withBorder shadow="md" p={20} mt={10} radius="sm">
+      {alertStatus.show && (
+        <Alert
+          color={alertStatus.success ? 'green' : 'red'}
+          title={alertStatus.success ? 'Success!' : 'Error!'}
+          withCloseButton
+          closeButtonLabel="Close"
+          onClose={() => setAlertStatus({ ...alertStatus, show: false })}
+          mb="md"
         >
-          <TextInput
-            label="Bot Token..."
-            placeholder="Bot Token..."
-            required
-            {...ProfileSettings.getInputProps('BotToken')}
-          />
-
-          <Button type="submit" fullWidth mt="xl">
-            Update Bot Token
-          </Button>
-        </form>
-      </Paper>
-    </>
+          {alertStatus.message}
+        </Alert>
+      )}
+      <form onSubmit={ProfileSettings.onSubmit(handleChangeToken)}>
+        <TextInput
+          label="Bot Token..."
+          placeholder="Bot Token..."
+          required
+          {...ProfileSettings.getInputProps('BotToken')}
+        />
+        <Alert color="red" title="Be careful!" mb="md" mt="md">
+          Changing your bot token is an extremely dangerous operation. If you delete your bot, you
+          will lose all your data. Please, before changing it, start the bot with the account you
+          previusly linked to your account.
+        </Alert>
+        <Button type="submit" fullWidth mt="md">
+          Update Bot Token
+        </Button>
+      </form>
+    </Paper>
   );
 }
+//ricorda di mettere alert che updatando token si perde tutto!
