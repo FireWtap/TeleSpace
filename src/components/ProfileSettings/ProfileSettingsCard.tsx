@@ -1,4 +1,4 @@
-import { getMe, instance } from '@/utils/api';
+import { getMe, instance, updateBotToken } from '@/utils/api';
 import {
   Alert,
   Anchor,
@@ -17,26 +17,27 @@ interface User {
   username: string;
 }
 
-function handleChangeToken(values) {
-  let botToken = values.BotToken;
-  // Check if token is valid
-  instance
-    .post('/checkBotToken', { bot_token: botToken })
-    .then((response) => {
-      if (response.data.Ok == 'true') {
-        console.log(true);
-      } else {
-        console.log(false);
-      }
-    })
-    .catch((err) => console.log(err))
-    .finally();
-}
-
 export default function ProfileSettingsCard() {
   const [alertStatus, setAlertStatus] = useState({ show: false, success: false, message: '' });
   const [me, setMe] = useState<User | null>(null);
-
+  const handleChangeToken = (values) => {
+    let botToken = values.BotToken;
+    // Check if token is valid
+    instance
+      .post('/checkBotToken', { bot_token: botToken })
+      .then((response) => {
+        if (response.data.Ok == 'true') {
+          //Fine we can update it
+          updateBotToken(botToken).then((response) => {
+            setAlertStatus({ show: true, success: true, message: 'Token updated!' });
+          });
+        } else {
+          setAlertStatus({ show: true, success: false, message: "Invalid Token! Won't update" });
+        }
+      })
+      .catch((err) => console.log(err))
+      .finally();
+  };
   const updateMe = async () => {
     try {
       const response = await getMe();
@@ -91,7 +92,7 @@ export default function ProfileSettingsCard() {
           />
 
           <Button type="submit" fullWidth mt="xl">
-            Sign in
+            Update Bot Token
           </Button>
         </form>
       </Paper>

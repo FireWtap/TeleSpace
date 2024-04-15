@@ -83,4 +83,21 @@ const getMe = async () => {
     return null;
   }
 };
-export { instance, logout, getDirectoryName, getParentDirectory, getFileInfo, getMe };
+
+const updateBotToken = async (botToken: string) => {
+  instance
+    .post('/updateBotToken', { bot_token: botToken })
+    .then((response) => {
+      return response.data.Ok;
+    })
+    .catch((err) => console.log(err));
+};
+export {
+  instance,
+  logout,
+  getDirectoryName,
+  getParentDirectory,
+  getFileInfo,
+  getMe,
+  updateBotToken,
+};
