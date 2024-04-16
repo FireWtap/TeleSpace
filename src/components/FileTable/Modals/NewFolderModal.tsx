@@ -8,8 +8,6 @@ import { IconCheck, IconPlus } from '@tabler/icons-react';
 import { useState } from 'react';
 
 export default function NewFolderModal({ opened, onClose, onSubmit, ...props }) {
-  const [loadingVisible, { toggle }] = useDisclosure(false);
-  const [alertProps, setAlertProps] = useState({ visibility: true, alertText: '', color: '' });
   const createFolderForm = useForm({
     initialValues: {
       folderName: '',

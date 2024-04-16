@@ -25,6 +25,7 @@ export default function MenuToolTip({
   download_modal,
   delete_modal,
   clear_cache_modal,
+  rename_modal,
   ...props
 }) {
   onSubmit = () => {
@@ -59,7 +60,10 @@ export default function MenuToolTip({
             ''
           )}
 
-          <Menu.Item leftSection={<IconEdit style={{ width: rem(14), height: rem(14) }} />}>
+          <Menu.Item
+            leftSection={<IconEdit style={{ width: rem(14), height: rem(14) }} />}
+            onClick={() => rename_modal()}
+          >
             Rename
           </Menu.Item>
           <Menu.Divider />

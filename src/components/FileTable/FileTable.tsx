@@ -1,34 +1,9 @@
 import { $currentDir, $currentFileInfo, $currentSelectedId } from '@/stores/user';
 import { useStore } from '@nanostores/react';
 import { getDirectoryName, getFileInfo, getParentDirectory, instance } from '@/utils/api';
-import {
-  Box,
-  Button,
-  Center,
-  Flex,
-  Group,
-  Menu,
-  Modal,
-  Paper,
-  Stack,
-  Table,
-  Text,
-  Title,
-  rem,
-} from '@mantine/core';
-import {
-  IconArrowBack,
-  IconCheck,
-  IconDownload,
-  IconFile,
-  IconFold,
-  IconFolder,
-  IconFolderPlus,
-  IconPlus,
-  IconUpload,
-  IconX,
-} from '@tabler/icons-react';
-import React, { Children, useEffect, useState } from 'react';
+import { Button, Group, Paper, Stack, Text, Title, rem } from '@mantine/core';
+import { IconFile, IconFolder, IconFolderPlus, IconUpload } from '@tabler/icons-react';
+import React, { useEffect, useState } from 'react';
 import UploadModal from './Modals/UploadModal';
 import { formatBytes } from '@/utils/function_utils';
 import NewFolderModal from './Modals/NewFolderModal';
@@ -38,6 +13,8 @@ import { useDisclosure } from '@mantine/hooks';
 import DownloadModal from './Modals/DownloadModal';
 import DeleteModal from './Modals/DeleteModal';
 import ClearCacheModal from './Modals/ClearCacheModal';
+import RenameFileModal from './Modals/RenameModal';
+import RenameModal from './Modals/RenameModal';
 
 interface FileDetails {
   filename: string; // Nome del file
@@ -90,6 +67,8 @@ function FileTable() {
   const [openedModalDelete, { open: openModalDelete, close: closeModalDelete }] =
     useDisclosure(false);
   const [openedModalClearCache, { open: openModalClearCache, close: closeModalClearCache }] =
+    useDisclosure(false);
+  const [openedRenameModal, { open: openRenameModal, close: closeRenameModal }] =
     useDisclosure(false);
 
   useEffect(() => {
@@ -144,6 +123,7 @@ function FileTable() {
                     download_modal={() => {}}
                     delete_modal={() => openModalDelete()}
                     clear_cache_modal={() => openModalClearCache()}
+                    rename_modal={() => openRenameModal()}
                   />
                 </Group>
               </Paper>
@@ -182,36 +162,35 @@ function FileTable() {
       <Stack>
         {files
           .filter((f) => !f?.type)
-          .map((file, index) => {
+          .map((file, index) => (
             //{"filename":"pescerossopep","id":2,"last_download":null,"locally_stored":null,"original_size":0,"parent_dir":null,"type":true,"upload_time":"2024-03-10 18:35:04","user":1}
-            return (
-              <Paper radius="lg" bg="whitesmoke" p={16}>
-                <Group justify="space-between">
-                  <Group>
-                    <IconFile />
-                    <Stack gap={0}>
-                      <Title order={6}>{file.filename.replace('./temp/', '')}</Title>
-                      <Text size="xs">Created on: {file?.upload_time?.split(' ')[0]}</Text>
-                      <Text size="xs">Size: {formatBytes(file?.original_size)}</Text>
-                      <Text size="xs" color={!file?.locally_stored ? 'red' : 'green'}>
-                        {!file?.locally_stored ? 'Not locally available' : 'Locally available'}
-                      </Text>
-                    </Stack>
-                  </Group>
-                  <MenuToolTip
-                    onSubmit={() => loadFiles(currentDir, setFiles)}
-                    id={file.id}
-                    type="file"
-                    className={classes.MenuToolTip}
-                    locally_stored={file.locally_stored}
-                    download_modal={() => openDownload()}
-                    delete_modal={() => openModalDelete()}
-                    clear_cache_modal={() => openModalClearCache()}
-                  />
+            <Paper radius="lg" bg="whitesmoke" p={16}>
+              <Group justify="space-between">
+                <Group>
+                  <IconFile />
+                  <Stack gap={0}>
+                    <Title order={6}>{file.filename.replace('./temp/', '')}</Title>
+                    <Text size="xs">Created on: {file?.upload_time?.split(' ')[0]}</Text>
+                    <Text size="xs">Size: {formatBytes(file?.original_size)}</Text>
+                    <Text size="xs" color={!file?.locally_stored ? 'red' : 'green'}>
+                      {!file?.locally_stored ? 'Not locally available' : 'Locally available'}
+                    </Text>
+                  </Stack>
                 </Group>
-              </Paper>
-            );
-          })}
+                <MenuToolTip
+                  onSubmit={() => loadFiles(currentDir, setFiles)}
+                  id={file.id}
+                  type="file"
+                  className={classes.MenuToolTip}
+                  locally_stored={file.locally_stored}
+                  download_modal={() => openDownload()}
+                  delete_modal={() => openModalDelete()}
+                  clear_cache_modal={() => openModalClearCache()}
+                  rename_modal={() => openRenameModal()}
+                />
+              </Group>
+            </Paper>
+          ))}
       </Stack>
 
       <NewFolderModal
@@ -234,6 +213,12 @@ function FileTable() {
       <ClearCacheModal
         openedModalClearCache={openedModalClearCache}
         closeModalClearCache={closeModalClearCache}
+        currentFileInfo={currentFileInfo}
+        onSubmit={() => loadFiles(currentDir, setFiles)}
+      />
+      <RenameModal
+        openedRenameModal={openedRenameModal}
+        closeRenameModal={closeRenameModal}
         currentFileInfo={currentFileInfo}
         onSubmit={() => loadFiles(currentDir, setFiles)}
       />
