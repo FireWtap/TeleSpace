@@ -6,9 +6,7 @@ export const $token = persistentAtom('token', undefined, {
   encode: JSON.stringify,
   decode: JSON.parse,
 });
-export const $isLoggedIn = computed($token, (token) => {
-  return token !== null && token !== undefined && token?.length > 0;
-});
+export const $isLoggedIn = computed($token, (token) => token !== null && token !== undefined && token?.length > 0);
 
 export const $currentDir = persistentAtom('currentDir', -1, {
   encode: JSON.stringify,

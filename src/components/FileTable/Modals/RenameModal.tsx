@@ -1,5 +1,3 @@
-import { $currentFileInfo, $currentSelectedId } from '@/stores/user';
-import { instance } from '@/utils/api';
 import { Alert, Box, Button, Flex, Input, Modal, Stack, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
@@ -7,8 +5,11 @@ import { showNotification } from '@mantine/notifications';
 import { useStore } from '@nanostores/react';
 import { IconCheck, IconPlus } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
+import { instance } from '@/utils/api';
+import { $currentFileInfo, $currentSelectedId } from '@/stores/user';
+
 function renameFile(id, new_name, onSubmit, closeModal) {
-  instance.post('/renameFile/' + id, { new_name: new_name }).then((response) => {
+  instance.post(`/renameFile/${id}`, { new_name }).then((response) => {
     onSubmit();
     closeModal();
     if (response.data.Ok) {
@@ -29,7 +30,7 @@ function renameFile(id, new_name, onSubmit, closeModal) {
 }
 
 function renameDirectory(id, new_name, onSubmit, closeModal) {
-  instance.post('/renameDirectory/' + id, { new_name: new_name }).then((response) => {
+  instance.post(`/renameDirectory/${id}`, { new_name }).then((response) => {
     onSubmit();
     closeModal();
     if (response.data.Ok) {
@@ -107,7 +108,7 @@ export default function RenameModal({
                 leftSection={<IconPlus />}
                 placeholder={currentFileInfo.type ? 'Rename Folder' : 'Rename File'}
                 {...renameFileForm.getInputProps('currentName')}
-              ></Input>
+              />
               <Button type="submit">Confirm</Button>
             </Flex>
           </form>

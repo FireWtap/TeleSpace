@@ -1,12 +1,12 @@
-import { $currentSelectedId } from '@/stores/user';
-import { instance } from '@/utils/api';
 import { Button, Flex, Modal, Stack, Text } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 import { useStore } from '@nanostores/react';
 import { IconCheck } from '@tabler/icons-react';
+import { instance } from '@/utils/api';
+import { $currentSelectedId } from '@/stores/user';
 
 const deleteFolderReq = async (id, onSubmit, closeModal) => {
-  instance.delete('/deleteDirectory/' + id).then((response) => {
+  instance.delete(`/deleteDirectory/${id}`).then((response) => {
     onSubmit();
     closeModal();
     showNotification({
@@ -19,7 +19,7 @@ const deleteFolderReq = async (id, onSubmit, closeModal) => {
 };
 
 const deleteFileReq = async (id, onSubmit, closeModal) => {
-  instance.delete('/deleteFile/' + id).then((response) => {
+  instance.delete(`/deleteFile/${id}`).then((response) => {
     onSubmit();
     closeModal();
     showNotification({

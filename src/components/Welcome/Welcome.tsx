@@ -2,8 +2,9 @@ import React from 'react';
 import { Title, Text, Button, Group, Image, rem } from '@mantine/core';
 import { IconEdit, IconLogin, IconRegistered } from '@tabler/icons-react';
 // Non c'è bisogno di importare classes se si usano solo le props di Mantine per lo styling
-import logo from '@/assets/logo.svg';
 import { useNavigate } from 'react-router-dom';
+import logo from '@/assets/logo.svg';
+
 export function Welcome() {
   const navigate = useNavigate();
 
@@ -18,7 +19,7 @@ export function Welcome() {
         mb={0}
         fallbackSrc="https://placehold.co/600x400?text=Logo"
         onClick={() => navigate('/')}
-      ></Image>
+      />
       <Title size="50" ta="center">
         Welcome to{' '}
         <Text inherit variant="gradient" component="span" gradient={{ from: 'blue', to: 'purple' }}>

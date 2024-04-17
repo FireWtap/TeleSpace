@@ -1,11 +1,11 @@
-import { $currentFileInfo, $currentSelectedId, $token } from '@/stores/user';
-import { API_URL } from '@/utils/API_URL';
-import { instance } from '@/utils/api';
 import { Button, Flex, Group, Modal, Text, rem } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 import { useStore } from '@nanostores/react';
 import { IconCheck, IconDownload } from '@tabler/icons-react';
 import { useEffect } from 'react';
+import { instance } from '@/utils/api';
+import { API_URL } from '@/utils/API_URL';
+import { $currentFileInfo, $currentSelectedId, $token } from '@/stores/user';
 
 interface FileInfos {
   filename: string;
@@ -17,7 +17,7 @@ interface FileInfos {
 function downloadFile(id) {
   //not stored locally
   instance
-    .get('/downloadFile/' + id)
+    .get(`/downloadFile/${id}`)
     .then((response) => {
       showNotification({
         title: 'Download added to queue',
@@ -54,7 +54,7 @@ export default function DownloadModal({ openedModalDownload, closeDownload, ...p
           <Flex gap="md">
             {currentFileInfo?.locally_stored ? (
               <a
-                href={API_URL + '/downloadLocalFile/' + $token.get() + '/' + currentSelectedId}
+                href={`${API_URL}/downloadLocalFile/${$token.get()}/${currentSelectedId}`}
                 download
               >
                 <Button

@@ -1,12 +1,12 @@
 import { createBrowserRouter, Navigate, Outlet, RouterProvider } from 'react-router-dom';
-import { HomePage } from './pages/Home.page';
-import { FooterCentered } from './components/Footer/FooterCentered';
 import { element } from 'prop-types';
-import { Login } from './pages/Login.page';
 import { useStore } from '@nanostores/react';
-import { $isLoggedIn } from './stores/user';
 import { AppShell } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import { HomePage } from './pages/Home.page';
+import { FooterCentered } from './components/Footer/FooterCentered';
+import { Login } from './pages/Login.page';
+import { $isLoggedIn } from './stores/user';
 import Dashboard from './pages/Navpages/Dashboard.page';
 import Navbar from './components/Navbar/Navbar';
 import Header from './components/Header/Header';

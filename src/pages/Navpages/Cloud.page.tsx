@@ -1,15 +1,15 @@
-import FileTable from '@/components/FileTable/FileTable';
-import UploadModal from '@/components/FileTable/Modals/UploadModal';
-import { $currentDir } from '@/stores/user';
-import { getDirectoryName, instance } from '@/utils/api';
 import { Anchor, Breadcrumbs, Button, DirectionContext, Group, rem } from '@mantine/core';
 import { useStore } from '@nanostores/react';
 import { IconArrowBack, IconUpload } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
+import FileTable from '@/components/FileTable/FileTable';
+import UploadModal from '@/components/FileTable/Modals/UploadModal';
+import { $currentDir } from '@/stores/user';
+import { getDirectoryName, instance } from '@/utils/api';
 
 const getParentDirectory = async (id) => {
   try {
-    const response = await instance.get('/getParentDirectory/' + id);
+    const response = await instance.get(`/getParentDirectory/${id}`);
     if (response.data?.Ok !== undefined) {
       return response.data.Ok;
     }
@@ -45,7 +45,7 @@ export default function Cloud() {
                   $currentDir.set(dir);
                 });
               }}
-              radius={'xl'}
+              radius="xl"
             >
               <IconArrowBack />
             </Button>
@@ -54,7 +54,7 @@ export default function Cloud() {
         </Group>
       </Group>
 
-      <FileTable></FileTable>
+      <FileTable />
     </>
   );
 }

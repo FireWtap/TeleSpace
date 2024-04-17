@@ -1,4 +1,3 @@
-import { instance } from '@/utils/api';
 import { Button, Flex, Menu, Popover, Stack, Text, rem } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 import {
@@ -14,6 +13,7 @@ import {
 } from '@tabler/icons-react';
 import * as React from 'react';
 import { useState, useEffect } from 'react';
+import { instance } from '@/utils/api';
 
 import { $currentSelectedId } from '@/stores/user';
 

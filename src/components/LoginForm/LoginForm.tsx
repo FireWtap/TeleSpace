@@ -14,15 +14,15 @@ import {
   Alert,
   LoadingOverlay,
 } from '@mantine/core';
-import classes from './LoginForm.module.css';
-import logo from '@/assets/logo.svg';
 import { useForm } from '@mantine/form';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { API_URL } from '@/utils/API_URL';
 import { useNavigate } from 'react-router-dom';
-import loginHandler from './loginHandlers';
 import { c } from 'vite/dist/node/types.d-AKzkD8vd';
+import { API_URL } from '@/utils/API_URL';
+import loginHandler from './loginHandlers';
+import logo from '@/assets/logo.svg';
+import classes from './LoginForm.module.css';
 
 export function LoginForm() {
   const [loading, setLoading] = useState(false);
@@ -72,7 +72,7 @@ export function LoginForm() {
             mb={0}
             fallbackSrc="https://placehold.co/600x400?text=Logo"
             onClick={() => navigate('/')}
-          ></Image>
+          />
           <Title className={classes.title}>Welcome back!</Title>
           <Text color="dimmed" style={{ textAlign: 'center' }} size="sm" mt={5}>
             Do not have an account yet?{' '}

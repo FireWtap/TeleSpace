@@ -1,7 +1,7 @@
-import { instance } from '@/utils/api';
 import { Card, CardSection, Paper, Table, Text, rem } from '@mantine/core';
 import { IconCheck, IconClockPause, IconRefresh } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
+import { instance } from '@/utils/api';
 
 export default function TaskTable() {
   //    "Ok": "[{\"add_time\":\"2024-03-28 22:54:30\",\"completion_time\":\"2024-03-28 22:54:43\",\"id\":\"03ad0abc-7f5d-4537-8229-a26760d113ff\",\"name\":51,\"status\":\"COMPLETED\",
@@ -10,10 +10,10 @@ export default function TaskTable() {
   function getAllTasks() {
     instance
       .get('/tasks')
-      .then(function (response) {
+      .then((response) => {
         setTasks(JSON.parse(response.data.Ok));
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error);
       });
   }
@@ -22,7 +22,7 @@ export default function TaskTable() {
   }, []);
 
   useEffect(() => {
-    let newBody = tasks.map(
+    const newBody = tasks.map(
       (task: {
         id: number;
         name: number | string;
@@ -30,7 +30,7 @@ export default function TaskTable() {
         status: string;
         filename: string;
       }) => {
-        let status =
+        const status =
           task.status === 'COMPLETED' ? (
             <IconCheck color="green" />
           ) : task.status == 'WORKING' ? (
@@ -38,8 +38,8 @@ export default function TaskTable() {
           ) : (
             <IconClockPause color="red" />
           );
-        let filename =
-          task.filename.length < 20 ? task.filename : task.filename.slice(0, 20) + '...';
+        const filename =
+          task.filename.length < 20 ? task.filename : `${task.filename.slice(0, 20)}...`;
         return [task.id, filename, task.add_time, status];
       }
     );
@@ -49,12 +49,12 @@ export default function TaskTable() {
   const tableData = {
     caption: 'Your Tasks',
     head: ['Id', 'File', 'Add Time', 'Status'],
-    body: body,
+    body,
   };
   return (
     <>
       <Card shadow="xs" padding="md" radius="md" withBorder>
-        <Text fw={500} size="lg">
+        <Text fw={700} size="lg">
           Tasks
         </Text>
         <Table.ScrollContainer minWidth={rem(250)}>
@@ -64,7 +64,7 @@ export default function TaskTable() {
             withColumnBorders
             highlightOnHover
             striped
-          ></Table>
+          />
         </Table.ScrollContainer>
       </Card>
     </>

@@ -1,10 +1,10 @@
 import { IconCloudComputing, IconDashboard, IconMenu } from '@tabler/icons-react';
 import React, { useState } from 'react';
-import classes from './Navbar.module.css';
 import { Button, Code, Group, rgba } from '@mantine/core';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { theme } from '@/theme';
 import { useMediaQuery } from '@mantine/hooks';
+import { theme } from '@/theme';
+import classes from './Navbar.module.css';
 
 export default function Navbar({ toggle, ...props }) {
   const [active, setActive] = useState('Dashboard');
@@ -19,14 +19,12 @@ export default function Navbar({ toggle, ...props }) {
       data-active={item.label === active || undefined}
       to={item.link}
       key={item.label}
-      style={({ isActive, isPending, isTransitioning }) => {
-        return {
+      style={({ isActive, isPending, isTransitioning }) => ({
           fontWeight: isActive ? 'bold' : '',
           color: isPending ? 'red' : 'black',
           viewTransitionName: isTransitioning ? 'slide' : '',
           backgroundColor: isActive ? rgba('#add8e6', 0.5) : '',
-        };
-      }}
+        })}
     >
       <item.icon className={classes.linkIcon} stroke={1.5} />
       <span>{item.label}</span>

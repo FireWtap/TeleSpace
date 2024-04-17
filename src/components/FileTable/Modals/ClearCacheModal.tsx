@@ -1,13 +1,13 @@
-import { $currentSelectedId } from '@/stores/user';
-import { instance } from '@/utils/api';
 import { Button, Flex, Modal, Stack, Text } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 import { useStore } from '@nanostores/react';
 import { IconCheck } from '@tabler/icons-react';
 import * as React from 'react';
+import { instance } from '@/utils/api';
+import { $currentSelectedId } from '@/stores/user';
 
 const clearCache = async (id, onSubmit, closeModal) => {
-  instance.get('/clearCache/' + id).then((response) => {
+  instance.get(`/clearCache/${id}`).then((response) => {
     onSubmit();
     closeModal();
     showNotification({

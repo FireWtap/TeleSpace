@@ -4,10 +4,10 @@ import { useDisclosure } from '@mantine/hooks';
 import { IconCheck, IconFile, IconPhoto, IconUpload, IconX } from '@tabler/icons-react';
 import React, { useState } from 'react';
 import '@mantine/dropzone/styles.css';
+import { showNotification } from '@mantine/notifications';
 import { formatBytes } from '@/utils/function_utils';
 import { instance } from '@/utils/api';
 import { $currentDir } from '@/stores/user';
-import { showNotification } from '@mantine/notifications';
 
 export default function UploadModal({ opened, onClose, onSubmit, ...props }) {
   const [filesList, setFilesList] = useState([]);
@@ -41,8 +41,7 @@ export default function UploadModal({ opened, onClose, onSubmit, ...props }) {
     setIsLoading(true);
 
     //Array of promises
-    const uploadPromises = filesList.map((f: File) => {
-      return instance.post(
+    const uploadPromises = filesList.map((f: File) => instance.post(
         'uploadFile',
         { file: f, dir: $currentDir.get(), filename: f.name },
         {
@@ -52,11 +51,10 @@ export default function UploadModal({ opened, onClose, onSubmit, ...props }) {
             }
           },
         }
-      );
-    });
+      ));
     //Wait until all promises get satisfied
     Promise.all(uploadPromises)
-      .then(function (responses) {
+      .then((responses) => {
         setIsLoading(false);
         onSubmit();
         showNotification({
@@ -69,10 +67,10 @@ export default function UploadModal({ opened, onClose, onSubmit, ...props }) {
 
         handleClose();
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log("Errore durante l'upload di uno o più file", error);
       })
-      .finally(function () {});
+      .finally(() => {});
   }
 
   return (

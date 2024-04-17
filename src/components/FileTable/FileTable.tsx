@@ -1,15 +1,15 @@
-import { $currentDir, $currentFileInfo, $currentSelectedId } from '@/stores/user';
 import { useStore } from '@nanostores/react';
-import { getDirectoryName, getFileInfo, getParentDirectory, instance } from '@/utils/api';
 import { Button, Group, Paper, Stack, Text, Title, rem } from '@mantine/core';
 import { IconFile, IconFolder, IconFolderPlus, IconUpload } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
+import { useDisclosure } from '@mantine/hooks';
+import { $currentDir, $currentFileInfo, $currentSelectedId } from '@/stores/user';
+import { getDirectoryName, getFileInfo, getParentDirectory, instance } from '@/utils/api';
 import UploadModal from './Modals/UploadModal';
 import { formatBytes } from '@/utils/function_utils';
 import NewFolderModal from './Modals/NewFolderModal';
 import MenuToolTip from './MenuToolTip/MenuToolTip';
 import classes from './FileTable.module.css';
-import { useDisclosure } from '@mantine/hooks';
 import DownloadModal from './Modals/DownloadModal';
 import DeleteModal from './Modals/DeleteModal';
 import ClearCacheModal from './Modals/ClearCacheModal';
@@ -37,7 +37,7 @@ interface FileInfos {
 
 const loadFiles = (dir, f) => {
   instance
-    .get('/listDirectory/' + dir)
+    .get(`/listDirectory/${dir}`)
     .then((response) => {
       const data = JSON.parse(response.data?.Ok);
       f(data);
@@ -105,8 +105,7 @@ function FileTable() {
       <Group>
         {files
           .filter((f) => f?.type)
-          .map((file, index) => {
-            return (
+          .map((file, index) => (
               <Paper radius="lg" bg="whitesmoke" p={16} className={classes.Card}>
                 <Group>
                   <IconFolder onClick={() => changeDir(file.id)} />
@@ -127,8 +126,7 @@ function FileTable() {
                   />
                 </Group>
               </Paper>
-            );
-          })}
+            ))}
 
         <Paper
           radius="lg"

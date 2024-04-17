@@ -1,5 +1,5 @@
-import { $token } from '@/stores/user';
 import axios from 'axios';
+import { $token } from '@/stores/user';
 import { API_URL } from './API_URL';
 
 const instance = axios.create({
@@ -23,9 +23,7 @@ instance.interceptors.request.use(
 );
 
 instance.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
   (error) => {
     console.log(error);
   }
@@ -38,7 +36,7 @@ const logout = () => {
 
 const getDirectoryName = async (id) => {
   try {
-    const response = await instance.get('/getDirectoryName/' + id);
+    const response = await instance.get(`/getDirectoryName/${id}`);
     if (response.data?.Ok !== undefined) {
       return response.data.Ok;
     }
@@ -50,7 +48,7 @@ const getDirectoryName = async (id) => {
 
 const getParentDirectory = async (id: Number) => {
   try {
-    const response = await instance.get('/getParentDirectory/' + id);
+    const response = await instance.get(`/getParentDirectory/${id}`);
     if (response.data?.Ok !== undefined) {
       return response.data.Ok;
     }
@@ -62,7 +60,7 @@ const getParentDirectory = async (id: Number) => {
 
 const getFileInfo = async (id: Number) => {
   try {
-    const response = await instance.get('/info/' + id);
+    const response = await instance.get(`/info/${id}`);
     if (response.data?.Ok !== undefined) {
       return JSON.parse(response.data.Ok);
     }
@@ -87,9 +85,7 @@ const getMe = async () => {
 const updateBotToken = async (botToken: string) => {
   instance
     .post('/updateBotToken', { bot_token: botToken })
-    .then((response) => {
-      return response.data.Ok;
-    })
+    .then((response) => response.data.Ok)
     .catch((err) => console.log(err));
 };
 export {

@@ -1,11 +1,11 @@
 import { Image, Container, Group, Title, Text, Avatar, Menu, rem } from '@mantine/core';
 import React, { useEffect, useState } from 'react';
-import logo from '@/assets/logo.svg';
 import { useNavigate } from 'react-router-dom';
-import { instance, logout } from '@/utils/api';
-import { $token } from '@/stores/user';
 import { IconLogout, IconUser } from '@tabler/icons-react';
 import { onMount } from 'nanostores';
+import logo from '@/assets/logo.svg';
+import { instance, logout } from '@/utils/api';
+import { $token } from '@/stores/user';
 
 function Header() {
   const navigate = useNavigate();
@@ -16,11 +16,11 @@ function Header() {
   useEffect(() => {
     instance
       .get('/me')
-      .then(function (response) {
-        const email: String = JSON.parse(response.data?.Ok).email;
-        setInitial(email.charAt(0).toUpperCase() + '@');
+      .then((response) => {
+        const { email } = JSON.parse(response.data?.Ok);
+        setInitial(`${email.charAt(0).toUpperCase()}@`);
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error);
       });
   }, []);

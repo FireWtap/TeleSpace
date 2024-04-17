@@ -1,11 +1,11 @@
-import { $currentDir } from '@/stores/user';
-import { instance } from '@/utils/api';
 import { Alert, Box, Button, Flex, Input, Modal, Stack, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import { showNotification } from '@mantine/notifications';
 import { IconCheck, IconPlus } from '@tabler/icons-react';
 import { useState } from 'react';
+import { instance } from '@/utils/api';
+import { $currentDir } from '@/stores/user';
 
 export default function NewFolderModal({ opened, onClose, onSubmit, ...props }) {
   const createFolderForm = useForm({
@@ -20,7 +20,7 @@ export default function NewFolderModal({ opened, onClose, onSubmit, ...props }) 
   function handleCreateFolderSubmit(values: { folderName: string }) {
     instance
       .post('/createDir', { name: values.folderName, parent: $currentDir.get() })
-      .then(function (response) {
+      .then((response) => {
         if (response.data.Ok != undefined) {
           onClose();
           onSubmit();
@@ -32,7 +32,7 @@ export default function NewFolderModal({ opened, onClose, onSubmit, ...props }) 
           });
         }
       })
-      .catch(function (error) {
+      .catch((error) => {
         onClose();
         console.log(error);
       });
@@ -48,7 +48,7 @@ export default function NewFolderModal({ opened, onClose, onSubmit, ...props }) 
                 leftSection={<IconPlus />}
                 placeholder="New folder name"
                 {...createFolderForm.getInputProps('folderName')}
-              ></Input>
+              />
               <Button type="submit">Add Folder</Button>
             </Flex>
           </form>

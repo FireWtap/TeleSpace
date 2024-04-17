@@ -1,11 +1,5 @@
 import { Anchor, Group, ActionIcon, rem, Text } from '@mantine/core';
-import {
-  IconBrandTwitter,
-  IconBrandYoutube,
-  IconBrandInstagram,
-  IconBrandGithub,
-  IconBrandLinkedin,
-} from '@tabler/icons-react';
+import { IconBrandInstagram, IconBrandGithub, IconBrandLinkedin } from '@tabler/icons-react';
 import classes from './FooterCentered.module.css';
 
 export function FooterCentered() {
@@ -45,7 +39,7 @@ export function FooterCentered() {
               <IconBrandLinkedin
                 style={{ width: rem(18), height: rem(18) }}
                 stroke={1.5}
-              ></IconBrandLinkedin>
+              />
             </ActionIcon>
           </a>
         </Group>
