@@ -88,6 +88,13 @@ const updateBotToken = async (botToken: string) => {
     .then((response) => response.data.Ok)
     .catch((err) => console.log(err));
 };
+
+const updateChatId = async (chatId: string) => {
+  instance
+    .post('/updateChatId', { chat_id: chatId })
+    .then((response) => response)
+    .catch((err) => console.log(err));
+};
 export {
   instance,
   logout,
@@ -96,4 +103,5 @@ export {
   getFileInfo,
   getMe,
   updateBotToken,
+  updateChatId,
 };

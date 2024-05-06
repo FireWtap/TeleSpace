@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { IconLogout, IconUser } from '@tabler/icons-react';
 import { onMount } from 'nanostores';
 import logo from '@/assets/logo.svg';
-import { instance, logout } from '@/utils/api';
+import { getMe, instance, logout } from '@/utils/api';
 import { $token } from '@/stores/user';
 
 function Header() {
@@ -14,15 +14,10 @@ function Header() {
   const [initial, setInitial] = useState('');
 
   useEffect(() => {
-    instance
-      .get('/me')
-      .then((response) => {
-        const { email } = JSON.parse(response.data?.Ok);
-        setInitial(`${email.charAt(0).toUpperCase()}@`);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    getMe().then((response) => {
+      const parsed = JSON.parse(response);
+      setInitial(`${parsed.email.charAt(0).toUpperCase()}@`);
+    });
   }, []);
 
   return (
