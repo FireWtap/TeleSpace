@@ -1,36 +1,72 @@
-# Project Name
+# Frontend for Telespace 🚀
 
-Ever dreamed of being able to safely store GiB and GiB of data for free? With TeleSpace, you can.
-Leveraging Telegram's Storage and with some Magic, Telespace provides you with unlimited storage no matter what you wan't to store
+## Introduction
+
+This repository contains the frontend code for Telespace, a platform that utilizes Telegram for unlimited data storage. The frontend is built using modern web technologies including React, TypeScript, and Vite.
 
 ## Table of Contents
 
+- [Introduction](#introduction)
+- [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Features](#features)
+- [Project Structure](#project-structure)
+- [Dependencies](#dependencies)
+- [Scripts](#scripts)
 - [Contributing](#contributing)
 - [License](#license)
 
+## Features
+
+- Fast and Simple
+- Responsive user interface for data management
+- Integration with backend services for real-time data synchronization
+- Offline capabilities with service workers
+
 ## Installation
 
-Instructions on how to install and set up your project. Include any dependencies that need to be installed and any environment variables that need to be set.
+To get started with this project, clone the repository and install the dependencies:
+
+```bash
+git clone https://github.com/FireWtap/TeleSpace
+cd TeleSpace
+npm install
+```
 
 ## Usage
 
-Instructions on how to use your project. Include examples and any necessary configuration steps.
+To run the frontend in development mode, use the following command:
 
-## Features
+```bash
+npm run dev
+```
 
-List the main features of your project. This can include functionality, APIs, or any other relevant information.
+This will start the Vite server and open the application in your default web browser.
+
+## Project Structure
+
+- `src/`: Contains all the source code of the application.
+  - `components/`: Reusable UI components.
+  - `pages/`: Application pages.
+  - `utils/`: Utilities and helper functions.
+  - `assets/`: Static assets like images and icons.
+  - `stores/`: State management using stores.
+
+## Dependencies
+
+- React: A JavaScript library for building user interfaces.
+- Vite: A build tool that aims to provide a faster and leaner development experience for modern web projects.
+- TypeScript: A typed superset of JavaScript that compiles to plain JavaScript.
+
+## Scripts
+
+- `npm run dev`: Run the development server.
+- `npm build`: Build the application for production.
 
 ## Contributing
 
-Guidelines for contributing to your project. Include information on how others can contribute, the coding style to follow, and any other relevant information.
+Contributions to the project are welcome! Please fork the repository and submit a pull request with your changes. For major changes, please open an issue first to discuss what you would like to change.
 
 ## License
 
-Specify the license under which your project is released. This can be an open-source license or a custom license.
-
-## Contact
-
-Provide contact information for users to reach out to you with questions or feedback.
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
