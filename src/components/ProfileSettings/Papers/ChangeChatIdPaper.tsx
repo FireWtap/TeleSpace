@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useForm } from '@mantine/form';
 import { Alert, Button, Paper, TextInput } from '@mantine/core';
-import { getMe, instance, updateBotToken, updateChatId } from '@/utils/api';
+import { getMe, updateChatId } from '@/utils/api';
 
 interface User {
   botToken: string;

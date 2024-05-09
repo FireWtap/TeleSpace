@@ -15,11 +15,8 @@ import {
   LoadingOverlay,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { c } from 'vite/dist/node/types.d-AKzkD8vd';
-import { API_URL } from '@/utils/API_URL';
 import loginHandler from './loginHandlers';
 import logo from '@/assets/logo.svg';
 import classes from './LoginForm.module.css';
