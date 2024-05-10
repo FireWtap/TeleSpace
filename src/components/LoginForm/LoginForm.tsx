@@ -73,8 +73,8 @@ export function LoginForm() {
           <Title className={classes.title}>Welcome back!</Title>
           <Text color="dimmed" style={{ textAlign: 'center' }} size="sm" mt={5}>
             Do not have an account yet?{' '}
-            <Anchor size="sm" component="button">
-              Create account
+            <Anchor size="sm" component="button" onClick={() => navigate('/register')}>
+              Create an account
             </Anchor>
           </Text>
         </Grid.Col>

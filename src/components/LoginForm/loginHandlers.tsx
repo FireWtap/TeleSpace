@@ -20,7 +20,6 @@ const loginHandler = async (values: { email: string; password: string }, remembe
 
     if (response?.data?.Ok) {
       $token.set(response.data.Ok);
-
       /*if (remember) {
         const cookies = new Cookies();
         cookies.set('token', response.data.Ok, { path: '/' });

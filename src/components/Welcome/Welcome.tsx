@@ -4,6 +4,7 @@ import { IconEdit, IconLogin, IconRegistered } from '@tabler/icons-react';
 // Non c'è bisogno di importare classes se si usano solo le props di Mantine per lo styling
 import { useNavigate } from 'react-router-dom';
 import logo from '@/assets/logo.svg';
+import { showNotification } from '@/notification';
 
 export function Welcome() {
   const navigate = useNavigate();
@@ -60,6 +61,9 @@ export function Welcome() {
           mx="auto"
           size="md"
           leftSection={<IconEdit size="20" />}
+          onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.1)')}
+          onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+          onClick={() => navigate('/register')}
         >
           Sign-up
         </Button>

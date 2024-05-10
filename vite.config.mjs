@@ -8,61 +8,36 @@ export default defineConfig({
     react(),
     tsconfigPaths(),
     VitePWA({
-      registerType: 'autoUpdate',
-      injectRegister: 'auto',
+      mode: 'development',
+      injectManifest: {
+        globPatterns: ['**/*'],
+      },
+      strategies: 'injectManifest',
+      srcDir: 'src',
+      filename: 'firebase-messaging-sw.js',
       manifest: {
         name: 'TeleSpace',
         short_name: 'TeleSpace',
+        description: 'A simple app to store unlimited data, based on telegram APIs.',
+        theme_color: '#000000',
         icons: [
           {
-            src: './src/assets/android-chrome-192x192.png',
+            src: '/assets/android-chrome-192x192.png',
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: './src/assets/android-chrome-512x512.png',
+            src: '/assets/android-chrome-512x512.png',
             sizes: '512x512',
             type: 'image/png',
           },
         ],
-        start_url: '/',
-        screenshots: [],
-        theme_color: '#ffffff',
-        background_color: '#ffffff',
-        display: 'standalone',
       },
-
-      workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
-        runtimeCaching: [
-          {
-            urlPattern: /^https?.*/,
-            handler: 'NetworkFirst',
-            options: {
-              cacheName: 'apiCache',
-              expiration: {
-                maxEntries: 50,
-                maxAgeSeconds: 60 * 60 * 24,
-              },
-            },
-          },
-          {
-            urlPattern: (navigationRoute) => navigationRoute.event.request.mode === 'navigate',
-            handler: 'NetworkFirst',
-            options: {
-              networkTimeoutSeconds: 3, // Opzionale se usi NetworkFirst
-              cacheName: 'pages',
-              expiration: {
-                maxEntries: 20,
-              },
-            },
-          },
-        ],
-      },
-
+      registerType: 'autoUpdate',
       devOptions: {
         enabled: true,
       },
+      injectRegister: 'auto',
     }),
   ],
   test: {

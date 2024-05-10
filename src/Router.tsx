@@ -14,6 +14,7 @@ import Profile from './pages/Profile.page';
 import Cloud from './pages/Navpages/Cloud.page';
 import App from './App';
 import Offline from './components/Offline/Offline';
+import { Register } from './pages/Register.page';
 
 function NonLoggedIn() {
   return (
@@ -72,6 +73,10 @@ const router = createBrowserRouter([
       {
         path: '/login',
         element: <Login />,
+      },
+      {
+        path: '/register',
+        element: <Register />,
       },
     ],
   },
