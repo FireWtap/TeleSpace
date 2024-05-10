@@ -14,7 +14,7 @@ export default defineConfig({
       },
       strategies: 'injectManifest',
       srcDir: 'src',
-      filename: 'firebase-messaging-sw.js',
+      filename: 'serviceWorker.ts',
       manifest: {
         name: 'TeleSpace',
         short_name: 'TeleSpace',
