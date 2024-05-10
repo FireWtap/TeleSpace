@@ -15,7 +15,7 @@ const loginHandler = async (values: { email: string; password: string }, remembe
       {
         email: values.email,
         password_hash: values.password,
-        notification_token: token,
+        notification_token: token ?? '',
       },
       {
         headers: {
