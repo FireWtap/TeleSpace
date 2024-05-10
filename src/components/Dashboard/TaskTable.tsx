@@ -1,5 +1,5 @@
-import { Card, CardSection, Paper, Table, Text, rem } from '@mantine/core';
-import { IconCheck, IconClockPause, IconRefresh } from '@tabler/icons-react';
+import { Card, CardSection, Flex, List, Paper, Stack, Table, Text, ThemeIcon, rem } from '@mantine/core';
+import { IconCheck, IconCircleCheck, IconCircleDashed, IconClockPause, IconRefresh } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
 import { instance } from '@/utils/api';
 
@@ -32,14 +32,20 @@ export default function TaskTable() {
       }) => {
         const status =
           task.status === 'COMPLETED' ? (
-            <IconCheck color="green" />
+            <ThemeIcon color="teal" size={24} radius="xl">
+              <IconCircleCheck style={{ width: rem(16), height: rem(16) }} />
+            </ThemeIcon>
           ) : task.status == 'WORKING' ? (
-            <IconRefresh color="orange" />
+            <ThemeIcon color="blue" size={24} radius="xl">
+              <IconCircleDashed style={{ width: rem(16), height: rem(16) }} />
+            </ThemeIcon>
           ) : (
-            <IconClockPause color="red" />
+            <ThemeIcon color="red" size={24} radius="xl">
+              <IconClockPause color="red" />
+            </ThemeIcon>
           );
         const filename =
-          task.filename.length < 20 ? task.filename : `${task.filename.slice(0, 20)}...`;
+          task.filename.length <= 35 ? task.filename : `${task.filename.slice(0, 35)}...`;
         return [task.id, filename, task.add_time, status];
       }
     );
@@ -53,11 +59,8 @@ export default function TaskTable() {
   };
   return (
     <>
-      <Card shadow="xs" padding="md" radius="md" withBorder>
-        <Text fw={700} size="lg">
-          Tasks
-        </Text>
-        <Table.ScrollContainer minWidth={rem(250)}>
+
+        {/* <Table.ScrollContainer minWidth={rem(250)}>
           <Table
             captionSide="bottom"
             data={tableData}
@@ -65,8 +68,31 @@ export default function TaskTable() {
             highlightOnHover
             striped
           />
-        </Table.ScrollContainer>
-      </Card>
+        </Table.ScrollContainer> */}
+        <List
+          spacing="xs"
+          size="sm"
+          mt="lg"
+          center
+        >
+                {
+                  tableData.body.map((a) => (
+
+                        <List.Item
+                          key={a[0]}
+                          icon={
+                            a[3]
+                          }
+                        >
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                            <Text me="sm">{a[1]}</Text>
+                            <Text c="dimmed" size="sm">{a[2]}</Text>
+                          </div>
+                        </List.Item>
+                    ))
+                }
+        </List>
+
     </>
   );
 }

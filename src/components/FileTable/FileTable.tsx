@@ -1,7 +1,7 @@
 import { useStore } from '@nanostores/react';
 import { Button, Group, Paper, Stack, Text, Title, rem } from '@mantine/core';
 import { IconFile, IconFolder, IconFolderPlus, IconUpload } from '@tabler/icons-react';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { $currentDir, $currentFileInfo, $currentSelectedId } from '@/stores/user';
 import { getDirectoryName, getFileInfo, getParentDirectory, instance } from '@/utils/api';
@@ -82,7 +82,8 @@ function FileTable() {
         $currentFileInfo.set(info);
       }
     });
-  }, [currentSelectedId]);
+  }, [currentSelectedId, files]);
+
 
   useEffect(() => {
     const updateDirectoryName = async () => {

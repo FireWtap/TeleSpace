@@ -3,11 +3,11 @@
     Greycliff CF,
     var(--mantine-font-family);
   font-weight: 900;
-  text-align: center;
+  text-align: left;
 }
 
 .title p {
-  text-align: center;
+  text-align: left;
 }
 
 .registerElement {
