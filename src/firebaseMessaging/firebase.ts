@@ -1,18 +1,10 @@
 // Firebase Cloud Messaging Configuration File.
 // Read more at https://firebase.google.com/docs/cloud-messaging/js/client && https://firebase.google.com/docs/cloud-messaging/js/receive
 
+import { firebaseConfig } from '@/firebaseConfig';
 import { initializeApp } from 'firebase/app';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 
-const firebaseConfig = {
-  apiKey: 'AIzaSyBO5tsJtxE06NnNb9N8b2UY7b7YhtGsEnY',
-  authDomain: 'telespace-eeccd.firebaseapp.com',
-  projectId: 'telespace-eeccd',
-  storageBucket: 'telespace-eeccd.appspot.com',
-  messagingSenderId: '491194743669',
-  appId: '1:491194743669:web:b93effb38c6dff77e7313c',
-  measurementId: 'G-ZDPQRDF98K',
-};
 const app = initializeApp(firebaseConfig);
 
 export const messaging = getMessaging(app);
