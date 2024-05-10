@@ -8,7 +8,8 @@ export function FooterCentered() {
       <div className={classes.inner}>
         <Group className={classes.links}>
           <Text>
-            Made with ♥️ by{' '}
+            Made with 🚀
+            by{' '}
             <Anchor href="https://github.com/FireWtap/thesplitter" lh={1} size="md">
               Francesco
             </Anchor>

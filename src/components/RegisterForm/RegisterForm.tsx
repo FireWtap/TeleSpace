@@ -73,7 +73,37 @@ export function RegisterForm() {
   return (
     <Container fluid className={classes.pageContainer}>
       <Grid grow columns={12} style={{ width: '100%', height: '100%' }} justify="center">
-        <Grid.Col span={{ md: 6, sm: 12 }} className={classes.loginElement}>
+      <Grid.Col span={{ md: 12, sm: 12 }}>
+        <Flex align="center" direction="column" justify="center" mb="xl">
+          <Image
+            src={logo}
+            height={160}
+            maw={200}
+            mb={0}
+            fallbackSrc="https://placehold.co/600x400?text=Logo"
+            onClick={() => navigate('/')}
+          />
+          <div>
+          <Title className={classes.title} display="inline-block">Register to</Title> <Text
+            fw={900}
+            size={rem(35)}
+            variant="gradient"
+            gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
+            display="inline-block"
+          >
+            TeleSpace
+          </Text>
+
+          <Text color="dimmed" style={{ textAlign: 'center' }} size="sm" mt={5}>
+            Already have an account?{' '}
+            <Anchor size="sm" component="button" onClick={() => navigate('/login')}>
+              Sign-in
+            </Anchor>
+          </Text>
+          </div>
+        </Flex>
+      </Grid.Col>
+        <Grid.Col span={{ md: 12, sm: 12 }} className={classes.loginElement}>
           <LoadingOverlay
             visible={loading}
             zIndex={1000}
@@ -86,7 +116,8 @@ export function RegisterForm() {
             p={20}
             mt={10}
             radius="sm"
-            style={{ width: '100%', maxWidth: 'none' }}
+            mx="auto"
+            style={{ width: '100%', maxWidth: '400px' }}
           >
             {alertStatus.show && (
               <Alert
@@ -152,24 +183,7 @@ export function RegisterForm() {
             </form>
           </Paper>
         </Grid.Col>
-        <Grid.Col span={{ md: 6, sm: 12 }}>
-          <Image
-            src={logo}
-            height={200}
-            maw={200}
-            mx="auto"
-            mb={0}
-            fallbackSrc="https://placehold.co/600x400?text=Logo"
-            onClick={() => navigate('/')}
-          />
-          <Title className={classes.title}>Here we are 🌝</Title>
-          <Text color="dimmed" style={{ textAlign: 'center' }} size="sm" mt={5}>
-            Already have an account?{' '}
-            <Anchor size="sm" component="button" onClick={() => navigate('/login')}>
-              Sign-in
-            </Anchor>
-          </Text>
-        </Grid.Col>
+
       </Grid>
     </Container>
   );
