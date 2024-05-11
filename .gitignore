@@ -132,3 +132,4 @@ dist
 .DS_Store
 .env
 src/firebaseConfig.ts
+public/firebase-messaging-sw.js

@@ -7,3 +7,4 @@ export const firebaseConfig = {
   appId: '',
   measurementId: '',
 };
+export const vapidKey = '';

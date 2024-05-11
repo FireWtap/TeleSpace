@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { getTokenFromFirebase } from './firebaseMessaging/firebase';
-import { getMessaging, getToken } from 'firebase/messaging';
+import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 
 function requestPermission() {
   console.log('Requesting permission...');
@@ -10,6 +10,7 @@ function requestPermission() {
       if (permission === 'granted') {
         console.log('Notification permission granted.');
       }
+
     })
     .catch((err) => {
       console.log(err);
@@ -17,11 +18,21 @@ function requestPermission() {
 }
 
 ReactDOM.createRoot(document.getElementById('root')!).render(<App />);
-navigator.serviceWorker.register('/firebase-messaging-sw.js', { type: 'module' });
 
+//registering firebase service worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/firebase-messaging-sw.js')
+    .then(function (registration) {
+      console.log('Service Worker registered with scope:', registration.scope);
+    }).catch(function (err) {
+      console.log('Service Worker registration failed:', err);
+    });
+}
 requestPermission();
 console.log(getTokenFromFirebase());
 const messaging = getMessaging();
+
+
 getToken(messaging, {
   vapidKey:
     'BC5zdZRv4mlnV-NbcQuzEvXlepN4jVTGbxh4Phy1kIE_R9G_L2kHcziPRI1kZEs3ap44cjCP9gesNQ2DdFgvpvI',
@@ -38,10 +49,8 @@ getToken(messaging, {
     } else {
       // Show permission request UI
       console.log('No registration token available. Request permission to generate one.');
-      // ...
     }
   })
   .catch((err) => {
     console.log('An error occurred while retrieving token. ', err);
-    // ...
   });

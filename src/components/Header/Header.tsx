@@ -16,7 +16,7 @@ function Header() {
   useEffect(() => {
     getMe().then((response) => {
       const parsed = JSON.parse(response);
-      setInitial(`${parsed.email.charAt(0).toUpperCase()}@`);
+      setInitial("");
     });
   }, []);
 
