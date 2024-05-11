@@ -37,6 +37,8 @@ npm install
 
 To run the frontend in development mode, use the following command:
 
+Please remember to set all the config files with the required credentials for it to work. (Firebase cloud notification in particular) 
+
 ```bash
 npm run dev
 ```
